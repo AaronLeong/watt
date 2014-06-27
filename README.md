@@ -1,6 +1,7 @@
 #watt#
-version:0.0
-###Description#
+version: 0.0
+ 
+##Description##
 watt 是一个基于 iBeacon 技术的书店移动智能终端的自助结算系统
 
 ##Developers:##
