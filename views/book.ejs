@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <% include templates/head.ejs %>
+  </head>
+  <body>
+    <% include templates/layout.ejs %>
+    <script type="text/javascript">
+      $('#header-title').text("<%= name %>");
+      $('#menu-<%= type %>').addClass('active');
+      $('#header-right').hide();
+      <% if(url != "") { %>
+        $('#header-left').addClass("icon-arrow-left");
+        $('#header-left').addClass("icon");
+        $('#header-left').attr('href', '<%= url %>');
+      <% } %>
+    </script>
+
+    <div class="content">
+      <%= name %>
+    </div>
+
+  </body>
+</html>

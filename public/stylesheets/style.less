@@ -1,8 +1,253 @@
+@DarkerBlue: #11798D;
+@DarkBlue: #1291a9;
+@LightBlue: #cedfde;
+@LighterBlue: #d1f0ef;
+
+@backWhite: #fafaff;
+@backGray: #edf3f3;
+@foreGray: #777;
+
+@largeFont: 15px;
+@normalFont: 14px;
+@smallFont: 13px;
+
+@border: 1px solid #ddd;
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-color: @backWhite;
 }
 
 a {
-  color: #00B7FF;
+	color: @DarkBlue;
 }
+
+.btn-mine {
+  color: white;
+  background-color: @DarkBlue;
+  border: 1px solid @DarkBlue;
+}
+.btn-mine:active, .btn-mine.active {
+  color: #fff;
+  background-color: @DarkerBlue;
+  border: 1px solid @DarkerBlue;
+}
+
+.id {
+	display: none;
+}
+
+.header {
+	color: @LighterBlue;
+	background-color: @DarkBlue;
+	font-size: @largeFont;
+	.pull-left, .pull-right {
+		color: inherit;
+		line-height: 44px;
+		padding: 0;
+	}
+	.title {
+		color: inherit;
+		line-height: 30px;
+		padding-top: 7px;
+		a {
+			padding: 3px 25px;
+			background-color: @DarkerBlue;
+			border: 1px solid @LighterBlue;
+			border-radius: 5px;
+			span {
+				font-size: @largeFont;
+				color: @LightBlue;
+				font-weight: normal;
+			}
+		}
+	}
+}
+
+#menu {
+	background-color: @backGray;
+	a {
+		text-decoration: none;
+		color: @foreGray;
+		&.active {
+			color: @DarkerBlue;
+		}
+	}
+}
+
+.table-view-cell {
+	padding: 10px 10px 10px 15px;
+	.showAll {
+		float: right;
+		font-size: @smallFont;
+		line-height: 10px;
+		margin-top: 6px;
+	}
+	.bookList {
+		margin-top: 5px;
+		overflow-x: scroll;
+		white-space: nowrap;
+		div {
+			display: inline-table;
+			margin-right: 10px;
+			img {
+				height: 70px;
+			}
+			.bookname {
+				display: block;
+				font-size: @normalFont;
+				line-height: @normalFont;
+				width: inherit;
+				margin-bottom: 5px;
+			}
+			.other {
+				display: block;
+				font-size: 10px;
+				line-height: @normalFont;
+				color: @foreGray;
+				width: inherit;
+				margin-bottom: 2px;
+			}
+		}
+	}
+}
+
+#searchModal {
+	input {
+		height: 26px;
+		margin-top: 9px;
+		color: @foreGray;
+		font-size: inherit;
+		background-color: @backGray;
+	}
+}
+
+#index {
+	.slider {
+		height: 100px;
+		background-color: @backWhite;
+		padding: 0;
+		.slide {
+			height: 100px;
+		}
+	}
+}
+
+.user-form {
+	form {
+		margin: 10px;
+		.info {
+			font-size: @smallFont;
+			margin: 0 5px;
+			display: none;
+		}
+	}
+}
+
+#user {
+	border-bottom: 0px;
+	.arrow {
+		float: right;
+		margin-top: 6px;
+	}
+	.small {
+		font-size: 10px;
+		color: @foreGray;
+	}
+	#user-info {
+		display: none;
+	}
+	.user-info {
+		color: @foreGray;
+		font-size: 14px;
+		line-height: 30px;
+		border: 1px solid @LightBlue;
+		border-radius: 5px;
+		margin: 0 10px 5px 0;
+		padding: 0 15px;
+		.icon {
+			font-size: inherit;
+			margin-right: 5px;
+		}
+	}
+	#user-orders {
+		border: 0px;
+		#orders-title {
+			border-radius: 5px 5px 0 0;
+			border: @border;
+		}
+		.table-view-cell {
+			border: @border;
+			border-top: 0px;
+			.date {
+				color: @foreGray;
+				font-size: 10px;
+			}
+		}
+	}
+}
+
+#booklist {
+	a {
+		width: 320px;
+	}
+	.image {
+		width: 70px;
+		height: 70px;
+		display: inline-block;
+		vertical-align: top;
+		img {
+			max-height: 70px;
+			max-width: 70px;
+		}
+	}
+	.info {
+		display: inline-block;
+		width: 120px;
+		margin: 10px;
+		.bookname {
+			display: block;
+			font-size: @normalFont;
+			line-height: @normalFont;
+			width: inherit;
+			margin-bottom: 5px;
+		}
+		.other {
+			display: block;
+			font-size: 10px;
+			line-height: @normalFont;
+			color: @foreGray;
+			width: inherit;
+			margin-bottom: 2px;
+			.star {
+				color: orange;
+			}
+		}
+	}
+	.price {
+		display: inline-block;
+		vertical-align: top;
+		border: 1px solid @DarkBlue;
+		border-radius: 3px;
+		color: @DarkerBlue;
+		padding: 2px 5px;
+		margin-top: 15px;
+		font-size: @smallFont;
+		position: absolute;
+		right: 25px;
+	}
+	.number {
+		position: absolute;
+		right: 13px;
+		top: 13px;
+		background: @LighterBlue;
+		color: @DarkerBlue;
+		height: 22px;
+		width: 22px;
+		text-align: center;
+		border: 1px solid @DarkerBlue;
+		border-radius: 20px;
+		line-height: 22px;
+		font-size: @smallFont;
+	}
+}
+

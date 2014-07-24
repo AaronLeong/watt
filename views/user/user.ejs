@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= username %></title>
+    <% include ../templates/head.ejs %>
+  </head>
+  <body>
+    <% include ../templates/layout.ejs %>
+    <script type="text/javascript">
+      $('#header-title').text("我的");
+      $('#header-right').hide();
+    	$('#menu-user').addClass('active');
+    </script>
+
+    <div class="content">
+      <ul class="table-view" id="user">
+        <li class="table-view-cell" id="user-title">
+          <span><%= username %></span>
+          <span class="small">欢迎回来</span>
+          <span class="icon-arrow-down arrow"></span>
+        </li>
+        <li class="table-view-cell" id="user-info">
+          <div class="user-info">
+            <a href="#changePassModal">
+              <span class="icon icon-lock"></span>
+              <span>修改密码 · · · · · ·</span>
+            </a>
+          </div>
+          <div class="user-info">
+            <a href="#changeEmailModal">
+              <span class="icon icon-envelope"></span>
+              <span>修改邮箱 <%= email %></span>
+            </a>
+          </div>
+          <div class="user-info" style="margin-bottom: 0">
+            <a href="#changePhoneModal">
+              <span class="icon icon-phone"></span>
+              <span>修改电话 <%= cellphone %></span>
+            </a>
+          </div>
+        </li>
+        <li class="table-view-cell">
+          <ul class="table-view" id="user-orders">
+            <li class="table-view-cell" id="orders-title">历史账单</li>
+            <% for(var i = 0; i < orders.length; i++) {%>
+            <li class="table-view-cell">
+              <span>￥<%= orders[i].price %></span>
+              <span class="date"><%= orders[i].date %></span>
+              <span class="showAll"><p class="id"><%= orders[i].id %></p>显示全部<span class="icon-arrow-right"></span></span>
+              <div class="bookList">
+                <% for(var j = 0; j < orders[i].books.length; j++) { %>
+                <div class="book">
+                  <p class="id"><%= orders[i].books[j].id %></p>
+                  <a href="/user/book/<%= orders[i].books[j].id %>" data-ignore="push"><img src="<%= orders[i].books[j].img %>"></a>
+                  <div class="bookname"><%= orders[i].books[j].name %></div>
+                  <div class="other"><%= orders[i].books[j].author %> [<%= orders[i].books[j].type %>]</div>
+                  <div class="other">￥<%= orders[i].books[j].price %></div>
+                </div>
+                <% } %>
+              </div>
+            </li>
+            <% } %>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div id="changePassModal" class="modal">
+      <header class="bar bar-nav header">
+        <div class="title">修改密码</div>
+        <a class="pull-right" href="#changePassModal">取消</a>
+      </header>
+      <div class="content user-form">
+        <form id="changePassModalForm">
+          <div class="info"></div>
+          <input type="password" name="oldpass" placeholder="当前密码">
+          <div class="info"></div>
+          <input type="password" name="password" placeholder="新密码">
+          <div class="info"></div>
+          <input type="password" name="confirm" placeholder="确认新密码">
+          <div class="info"></div>
+          <button class="btn btn-mine btn-block" id="submit">确认提交</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="changeEmailModal" class="modal">
+      <header class="bar bar-nav header">
+        <div class="title">修改邮箱</div>
+        <a class="pull-right" href="#changeEmailModal">取消</a>
+      </header>
+      <div class="content user-form">
+        <form id="changeEmailForm">
+          <div class="info"></div>
+          <input type="text" name="email" placeholder="电子邮箱" value="<%= email %>">
+          <div class="info"></div>
+          <button class="btn btn-mine btn-block" id="submit">确认提交</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="changePhoneModal" class="modal">
+      <header class="bar bar-nav header">
+        <div class="title">修改手机</div>
+        <a class="pull-right" href="#changePhoneModal">取消</a>
+      </header>
+      <div class="content user-form">
+        <form id="changePhoneForm">
+          <div class="info"></div>
+          <input type="text" name="cellphone" placeholder="手机号码" value="<%= cellphone %>">
+          <div class="info"></div>
+          <button class="btn btn-mine btn-block" id="submit">确认提交</button>
+        </form>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      $('#user-title').click(function(){
+        togglePanel($('#user-title'));
+      });
+
+      $('#changePassModalForm').submit(function(){
+        var check = true;
+        check = checkPassword() && check;
+        check = checkConfirm() && check;
+        if(check == false)
+          return false;
+
+        $.ajax({  
+          type: 'POST',
+          data: $(this).serialize(),
+          contentType: false,
+          processData: false  
+        }).then(function(data){
+          if(data.success) {
+            $('.modal').removeClass('active');
+          } else {
+            $('#submit').prev().text(data.fail);
+            $('#submit').prev().show();
+          }
+        },function(){
+          $('#submit').prev().text("修改密码失败");
+          $('#submit').prev().show();
+        });
+        return false;
+      });
+
+      $('#changeEmailForm').submit(function(){
+        var check = true;
+        check = checkEmail() && check;
+        if(check == false)
+          return false;
+
+        $.ajax({  
+          type: 'POST',
+          data: $(this).serialize(),
+          contentType: false,
+          processData: false  
+        }).then(function(data){
+          if(data.success) {
+            $('.modal').removeClass('active');
+          } else {
+            $('#submit').prev().text(data.fail);
+            $('#submit').prev().show();
+          }
+        },function(){
+          $('#submit').prev().text("修改邮箱失败");
+          $('#submit').prev().show();
+        });
+        return false;
+      });
+
+      $('#changePhoneForm').submit(function(){
+        var check = true;
+        check = checkCellphone() && check;
+        if(check == false)
+          return false;
+
+        $.ajax({  
+          type: 'POST',
+          data: $(this).serialize(),
+          contentType: false,
+          processData: false  
+        }).then(function(data){
+          if(data.success) {
+            $('.modal').removeClass('active');
+          } else {
+            $('#submit').prev().text(data.fail);
+            $('#submit').prev().show();
+          }
+        },function(){
+          $('#submit').prev().text("修改手机号码失败");
+          $('#submit').prev().show();
+        });
+        return false;
+      });
+    </script>
+
+  </body>
+</html>

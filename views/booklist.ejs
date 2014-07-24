@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <% include templates/head.ejs %>
+  </head>
+  <body>
+    <% include templates/layout.ejs %>
+    <script type="text/javascript">
+      $('#header-title').text("<%= title %>");
+      $('#menu-<%= type %>').addClass('active');
+      <% if(type == "user") { %>
+        $('#header-right').hide();
+      <% } %>
+      <% if(url != "") { %>
+        $('#header-left').addClass("icon-arrow-left");
+        $('#header-left').addClass("icon");
+        $('#header-left').attr('href', '<%= url %>');
+      <% } %>
+    </script>
+
+    <div class="content">
+      <ul class="table-view" id="booklist">
+        <% for(var i = 0; i < books.length; i++) { %>
+        <li class="table-view-cell">
+          <% if(type == "user") { %>
+          <a href="/user/book/<%= id %>/<%= books[i].id %>" data-ignore="push">
+          <% } else if(type == "books") { %>
+          <a href="/book/<%= id %>/<%= books[i].id %>" data-ignore="push">
+          <% } %>
+            <div class="image">
+              <img src="<%= books[i].img %>">
+            </div>
+            <div class="info">
+              <div class="id"><%= books[i].id %></div>
+              <div class="bookname"><%= books[i].name %></div>
+              <div class="other"><%= books[i].author %> [<%= books[i].type %>]</div>
+              <div class="other">
+                <% var p = books[i].point; %>
+                <% for(var j = 0; j < 5; j++) { %>
+                  <% if(p> 1) { %>
+                    <span class="star icon-star3"></span>
+                    <% p--; %>
+                  <% } else if(p == 0.5) { %>
+                    <span class="star icon-star2"></span>
+                    <% p = 0; %>
+                  <% } else { %>
+                    <span class="star icon-star"></span>
+                  <% } %>
+                <% } %>
+                (<%= books[i].pointNum %>)
+              </div>
+            </div>
+            <div class="price">￥<%= books[i].price %></div>
+            <% if(books[i].number > 0) { %>
+            <div class="number"><%= books[i].number %></div>
+            <% } %>
+          </a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+
+  </body>
+</html>

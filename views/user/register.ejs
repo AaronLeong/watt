@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <% include ../templates/head.ejs %>
+  </head>
+  <body>
+
+    <% include ../templates/layout.ejs %>
+    <script type="text/javascript">
+    	$('#menu-user').addClass('active');
+    </script>
+
+    <div class="content user-form">
+      <form>
+        <div class="info"></div>
+        <input type="text" name="username" placeholder="用户名">
+        <div class="info"></div>
+        <input type="text" name="email" placeholder="电子邮箱">
+        <div class="info"></div>
+        <input type="text" name="cellphone" placeholder="手机号码">
+        <div class="info"></div>
+        <input type="password" name="password" placeholder="密码">
+        <div class="info"></div>
+        <input type="password" name="confirm" placeholder="再次输入密码">
+        <div class="info"></div>
+        <button class="btn btn-mine btn-block" id="submit">注册</button>
+      </form>
+    </div>
+
+    <script type="text/javascript">
+      $('form').submit(function(){
+        var check = true;
+        check = checkUsername() && check;
+        check = checkEmail() && check;
+        check = checkCellphone() && check;
+        check = checkPassword() && check;
+        check = checkConfirm() && check;
+        if(check == false)
+          return false;
+
+        $.ajax({  
+          type: 'POST',
+          data: $(this).serialize(),
+          contentType: false,
+          processData: false  
+        }).then(function(data){
+          if(data.success) {
+            window.location.href = "/user";
+          } else {
+            $('#submit').prev().text(data.fail);
+            $('#submit').prev().show();
+          }
+        },function(){
+          $('#submit').prev().text("注册失败");
+          $('#submit').prev().show();
+        });
+        return false;
+      });
+    </script>
+
+  </body>
+</html>

@@ -2,10 +2,49 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <% include templates/head.ejs %>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <% include templates/layout.ejs %>
+
+    <script type="text/javascript">
+      $('#menu-books').addClass('active');
+      $('#header-left').html('类别');
+    </script>
+
+    <div class="content">
+      <ul class="table-view" id="index">
+        <li class="table-view-cell slider">
+            <div class="slide-group">
+              <div class="slide" style="background-color: #eeffee">
+              </div>
+              <div class="slide" style="background-color: #ffeeee">
+              </div>
+              <div class="slide" style="background-color: #eeeeff">
+            </div>
+          </div>
+        </li>
+
+        <% for(var i = 1; i < booklists.length; i++) { %>
+          <li class="table-view-cell">
+            <span><%= booklists[i].title %></span>
+            <span class="showAll"><p class="id"><%= booklists[i].id %></p>显示全部<span class="icon-arrow-right"></span></span>
+            <div class="bookList">
+              <% for(var j = 0; j < booklists[i].books.length; j++) { %>
+              <div class="book">
+                <p class="id"><%= booklists[i].books[j].id %></p>
+                <a href="/book/<%= booklists[i].books[j].id %>" data-ignore="push"><img src="<%= booklists[i].books[j].img %>"></a>
+                <div class="bookname"><%= booklists[i].books[j].name %></div>
+                <div class="other"><%= booklists[i].books[j].author %> [<%= booklists[i].books[j].type %>]</div>
+                <div class="other">￥<%= booklists[i].books[j].price %></div>
+              </div>
+              <% } %>
+            </div>
+          </li>
+        <% } %>
+
+      </ul>
+    </div>
+
   </body>
 </html>

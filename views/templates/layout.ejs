@@ -1,0 +1,46 @@
+<header class="bar bar-nav header">
+	<a class="pull-left" id="header-left" data-ignore="push"></a>
+	<a class="icon icon-barcode pull-right" id="header-right" data-ignore="push"></a>
+  <div class="title" id="header-title">
+  	<a href="#searchModal">
+    	<span class="icon-search"></span>
+    	<span>寻找图书，作者，分类</span>
+  	</a>
+  </div>
+</header>
+
+<nav class="bar bar-tab" id="menu">
+  <a class="tab-item" href="/" id="menu-books" data-ignore="push">
+    <span class="icon icon-books"></span>
+    <span class="tab-label">书店</span>
+  </a>
+  <a class="tab-item" href="/location" id="menu-location" data-ignore="push">
+    <span class="icon icon-location"></span>
+    <span class="tab-label">位置</span>
+  </a>
+  <a class="tab-item" href="/cart" id="menu-cart" data-ignore="push">
+    <span class="icon icon-cart"></span>
+    <span class="tab-label">购物车</span>
+  </a>
+  <a class="tab-item" href="/user" id="menu-user" data-ignore="push">
+    <span class="icon icon-user"></span>
+    <span class="tab-label">我的</span>
+  </a>
+</nav>
+
+<div id="searchModal" class="modal">
+  <header class="bar bar-nav header">
+    <a class="pull-right" href="#searchModal">取消</a>
+    <input type="text" placeholder="请输入搜索词" id="searchInput">
+  </header>
+</div>
+
+<script type="text/javascript">
+  $('#searchInput').width($('#searchModal>header').width() - $('#searchModal>header>a').width() - 5);
+  $('#searchInput').keypress(function(event){
+    if(event.keyCode == 13) {
+      var keyword = $(this).val();
+      //提交表单
+    }
+  });
+</script>

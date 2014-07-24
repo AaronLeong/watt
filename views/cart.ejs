@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <% include templates/head.ejs %>
+  </head>
+  <body>
+    <% include templates/layout.ejs %>
+    <script type="text/javascript">
+      $('#header-title').text("购物车");
+      $('#menu-cart').addClass('active');
+    </script>
+  </body>
+</html>
