@@ -344,7 +344,7 @@ router.get('/location', function(req, res) {
 });
 
 router.get('/cart', function(req, res) {
-	res.render('cart', { title: 'Express' });
+	res.render('cart', { title: '购物车' });
 });
 
 module.exports = router;
