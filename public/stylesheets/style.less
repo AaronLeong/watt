@@ -274,9 +274,58 @@ a {
 			top: -8px;
 		}
 	}
+	.checkall {
+		display: inline-block;
+		color: @foreGray;
+	}
+	.checkall-info {
+		display: inline-block;
+		font-size: 13px;
+		vertical-align: top;
+		line-height: 13px;
+		margin-top: 3px;
+	}
+	.total {
+		display: inline-block;
+		color: @DarkBlue;
+		font-size: 15px;
+		vertical-align: top;
+		line-height: 13px;
+		margin-top: 3px;
+		float: right;
+	}
+	.submit {
+		float: right;
+		background-color: @DarkBlue;
+		color: white;
+		font-size: 13px;
+		height: 20px;
+		width: 40px;
+		text-align: center;
+		margin-left: 10px;
+	}
 }
 
 .segmented-control {
 	margin: 10px 20px;
 }
 
+.qrcode-back {
+	position: absolute;
+	top: 0;
+	opacity: 0.6;
+	height: 100%;
+	width: 100%;
+	background-color: @backGray;
+	display: none;
+}
+
+.qrcode {
+	position: absolute;
+	top: 150px;
+	left: 50%;
+	margin-left: -100px;
+	width: 200px;
+	border: 5px solid white;
+	display: none;
+}

@@ -9,13 +9,14 @@
     <script type="text/javascript">
       $('#header-title').text("<%= title %>");
       $('#menu-<%= type %>').addClass('active');
-      <% if(type == "user") { %>
-        $('#header-right').hide();
-      <% } %>
       <% if(url != "") { %>
         $('#header-left').addClass("icon-arrow-left");
         $('#header-left').addClass("icon");
         $('#header-left').attr('href', '<%= url %>');
+      <% } %>
+      <% if(title == "账单详情") { %>
+        $('#header-right').removeClass('icon-barcode');
+        $('#header-right').addClass('icon-qrcode');
       <% } %>
     </script>
 
@@ -61,6 +62,10 @@
         </li>
         <% } %>
       </ul>
+      <% if(title == "账单详情") { %>
+        <div class="qrcode-back"></div>
+        <img src="<%= qrcode %>" class="qrcode">
+      <% } %>
     </div>
 
   </body>

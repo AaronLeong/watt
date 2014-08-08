@@ -161,6 +161,7 @@ router.get('/order/:id', function(req, res){
 		title: "账单详情",
 		type: "user",
 		url: "/user",
+		qrcode: "/images/1.png",		// 账单二维码url
 		id: id,
 		books: [						// 图书，数组，传入该订单下的全部图书
 			{

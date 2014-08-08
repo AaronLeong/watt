@@ -242,7 +242,7 @@ router.get('/booklist/:id', function(req, res){
 	var id = req.params.id;
 	// data格式如下：
 	var data = {
-		title: "账单详情",
+		title: "最受好评",				// 列表名称
 		type: "books",
 		url: "/",
 		id: id,
@@ -441,7 +441,7 @@ router.get('/cart/:type', function(req, res) {
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				oldprice: 100,			// 原价，如原价与现价一致，则置为-1
-				number: 0,				// 购买数量
+				number: 2,				// 购买数量
 				point: 3.5,				// 评分，0~5，保留整数或.5
 				pointNum: 100,			// 评论数量，即参与评分的人数
 				inNervous: true			// 如果库存紧张，置为true，否则置为false
@@ -454,7 +454,7 @@ router.get('/cart/:type', function(req, res) {
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				oldprice: -1,			
-				number: 0,
+				number: 5,
 				point: 4.5,				// 评分，0~5，保留整数或.5
 				pointNum: 100, 			// 评论数量，即参与评分的人数
 				inNervous: true			// 如果库存紧张，置为true，否则置为false
@@ -467,7 +467,7 @@ router.get('/cart/:type', function(req, res) {
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				oldprice: 100,
-				number: 0,
+				number: 3,
 				point: 0.5,				// 评分，0~5，保留整数或.5
 				pointNum: 100, 			// 评论数量，即参与评分的人数
 				inNervous: true	
@@ -480,7 +480,7 @@ router.get('/cart/:type', function(req, res) {
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				oldprice: -1,			
-				number: 0,
+				number: 1,
 				point: 0,				// 评分，0~5，保留整数或.5
 				pointNum: 100, 			// 评论数量，即参与评分的人数
 				inNervous: false	
@@ -493,7 +493,7 @@ router.get('/cart/:type', function(req, res) {
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				oldprice: -1,			
-				number: 0,
+				number: 1,
 				point: 5,				// 评分，0~5，保留整数或.5
 				pointNum: 100, 			// 评论数量，即参与评分的人数
 				inNervous: false	
@@ -501,6 +501,19 @@ router.get('/cart/:type', function(req, res) {
 		]
 	}
 	res.render('cart', data);
+});
+
+// 购物车提交
+router.post('/cart/', function(req, res) {
+
+	// 数据位json格式，一个数组
+	// 数组中每个对象包括id和num两个域，分别代表图书id和购买数量
+
+	// 结算成功后，生成订单id，并返回
+	var data = {
+		orderid: 0
+	}
+	res.json(data);
 });
 
 module.exports = router;
