@@ -107,6 +107,14 @@ router.post('/', function(req, res) {
 	res.json(data);
 });
 
+router.get('/logout', function(req, res) {
+	// 注销
+
+	// 删除用户的session
+
+	res.redirect('/user/login');
+});
+
 router.get('/login', function(req, res) {
 	res.render('user/login', {title: "登录"});
 });

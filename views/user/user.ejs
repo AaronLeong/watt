@@ -8,8 +8,14 @@
     <% include ../templates/layout.ejs %>
     <script type="text/javascript">
       $('#header-title').text("我的");
-      $('#header-right').hide();
+      $('#header-right').removeClass('icon');
+      $('#header-right').removeClass('icon-barcode');
+      $('#header-right').text("注销");
     	$('#menu-user').addClass('active');
+
+      $('#header-right').click(function(){
+        window.location.href = "/user/logout";
+      });
     </script>
 
     <div class="content">
