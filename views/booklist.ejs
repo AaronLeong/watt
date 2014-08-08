@@ -20,13 +20,15 @@
     </script>
 
     <div class="content">
-      <ul class="table-view" id="booklist">
+      <ul class="table-view booklist" id="booklist">
         <% for(var i = 0; i < books.length; i++) { %>
         <li class="table-view-cell">
           <% if(type == "user") { %>
           <a href="/user/book/<%= id %>/<%= books[i].id %>" data-ignore="push">
           <% } else if(type == "books") { %>
           <a href="/book/<%= id %>/<%= books[i].id %>" data-ignore="push">
+          <% } else if(type == "location") { %>
+          <a href="/book/location/<%= books[i].id %>" data-ignore="push">
           <% } %>
             <div class="image">
               <img src="<%= books[i].img %>">
