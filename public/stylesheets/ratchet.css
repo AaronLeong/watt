@@ -739,8 +739,6 @@ input[type="button"] {
 .table-view-cell > a:not(.btn) {
   position: relative;
   display: block;
-  padding: inherit;
-  margin: -11px -65px -11px -15px;
   overflow: hidden;
   color: inherit;
 }
@@ -1013,7 +1011,7 @@ select {
   width: 280px;
   margin-left: -140px;
   background-color: white;
-  border-radius: 6px;
+  border-radius: 0 6px 6px 6px;
   -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, .1);
           box-shadow: 0 0 15px rgba(0, 0, 0, .1);
   opacity: 0;
@@ -1027,14 +1025,13 @@ select {
 .popover:before {
   position: absolute;
   top: -15px;
-  left: 50%;
+  left: 0;
   width: 0;
   height: 0;
-  margin-left: -15px;
+  margin-left: 0;
   content: '';
   border-right: 15px solid transparent;
   border-bottom: 15px solid white;
-  border-left: 15px solid transparent;
 }
 .popover.visible {
   opacity: 1;

@@ -10,10 +10,12 @@
     <script type="text/javascript">
       $('#menu-books').addClass('active');
       $('#header-left').html('类别');
+      $('#header-left').attr('href', '#categoryPopover');
     </script>
 
     <div class="content">
       <ul class="table-view" id="index">
+        <% if(id == 0) { %>
         <li class="table-view-cell slider">
             <div class="slide-group">
               <div class="slide" style="background-color: #eeffee">
@@ -24,6 +26,7 @@
             </div>
           </div>
         </li>
+        <% } %>
 
         <% for(var i = 0; i < booklists.length; i++) { %>
           <li class="table-view-cell">
@@ -43,6 +46,21 @@
           </li>
         <% } %>
 
+      </ul>
+    </div>
+
+    <div id="categoryPopover" class="popover">
+      <ul class="table-view">
+        <% for(var i = 0; i < categoryList.length; i++) { %>
+        <li class="table-view-cell">
+          <a href="/category/<%= categoryList[i].id %>" data-ignore="push">
+            <%= categoryList[i].name %>
+            <% if(categoryList[i].id == id) { %>
+            <span class="icon-checkmark"></span>
+            <% } %>
+          </a>
+        </li>
+        <% } %>
       </ul>
     </div>
 

@@ -3,8 +3,24 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
+	res.redirect('/category/0');
+});
+
+// 传入类别id，0为全部
+router.get('/category/:id', function(req, res) {
+	var id = req.params.id;
 	var data = {
 		title: '书城',
+		id: id,
+		categoryList: [							// 类别数组
+			{
+				id: 0,							// 类别id
+				name: "全部类别"					// 类别名称
+			}, {
+				id: 1,
+				name: "小说"
+			}
+		],
 		booklists: [							// 图书列表数组
 			{
 				title: "最新上架",					// 图书列表名称
