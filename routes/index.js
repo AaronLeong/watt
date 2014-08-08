@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
 				books: [							// 图书，数组，传入该订单下的全部图书
 					{
 						id: 0,					// id，用于获取图书详情
-						name: "书目",			// 书名
+						name: "书目qwertyuiop",			// 书名
 						img: "/images/4.png",	// 封面图片url
 						author: "文庆福",		// 作者
 						type: "百科",			// 类别
