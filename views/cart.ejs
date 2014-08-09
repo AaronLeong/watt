@@ -10,5 +10,172 @@
       $('#header-title').text("购物车");
       $('#menu-cart').addClass('active');
     </script>
+
+    <div class="content">
+      <div class="segmented-control">
+        <a class="control-item Books">全部图书(10)</a>
+        <a class="control-item BooksOnSale">降价图书(88)</a>
+        <a class="control-item BooksInNervous">库存紧张(88)</a>
+      </div>
+
+      <div class="card">
+        <ul class="table-view booklist control-content" id="Books">
+          <% for(var i = 0; i < books.length; i++) { %>
+          <li class="table-view-cell">
+            <div class="check icon-radio-unchecked"></div>
+            <div class="image">
+              <a href="/book/cart/Books/<%= books[i].id %>" data-ignore="push">
+                <img src="<%= books[i].img %>">
+              </a>
+            </div>
+            <div class="info">
+              <a href="/book/cart/Books/<%= books[i].id %>" data-ignore="push">
+                <div class="id"><%= books[i].id %></div>
+                <div class="bookname"><%= books[i].name %></div>
+                <div class="other"><%= books[i].author %> [<%= books[i].type %>]</div>
+                <div class="other">
+                  <% var p = books[i].point; %>
+                  <% for(var j = 0; j < 5; j++) { %>
+                    <% if(p> 1) { %>
+                      <span class="star icon-star3"></span>
+                      <% p--; %>
+                    <% } else if(p == 0.5) { %>
+                      <span class="star icon-star2"></span>
+                      <% p = 0; %>
+                    <% } else { %>
+                      <span class="star icon-star"></span>
+                    <% } %>
+                  <% } %>
+                  (<%= books[i].pointNum %>)
+                </div>
+              </a>
+            </div>
+            <div class="edit">
+              ￥<span class="newprice"><%= books[i].price %></span><br/>
+              <% if(books[i].oldprice != -1) { %>
+              <span class="oldPrice">￥<%= books[i].oldprice %></span>
+              <div class="line"></div>
+              <% } %>
+              x <span class="num"><%= books[i].number %></span>
+            </div>
+          </li>
+          <% } %>
+          <li class="table-view-cell">
+            <div class="checkall icon-radio-unchecked"></div>
+            <div class="checkall-info">全选</div>
+            <div class="submit">结算</div>
+            <div class="total">合计:￥<span class="amount">0</span></div>
+          </li>
+        </ul>
+
+        <ul class="table-view booklist control-content" id="BooksOnSale">
+          <% for(var i = 0; i < books.length; i++) { %>
+          <% if(books[i].oldprice != -1) { %>
+          <li class="table-view-cell">
+            <div class="check icon-radio-unchecked"></div>
+            <div class="image">
+              <a href="/book/cart/BooksOnSale/<%= books[i].id %>" data-ignore="push">
+               <img src="<%= books[i].img %>">
+              </a>
+            </div>
+            <div class="info">
+              <a href="/book/cart/BooksOnSale/<%= books[i].id %>" data-ignore="push">
+                <div class="id"><%= books[i].id %></div>
+                <div class="bookname"><%= books[i].name %></div>
+                <div class="other"><%= books[i].author %> [<%= books[i].type %>]</div>
+                <div class="other">
+                  <% var p = books[i].point; %>
+                  <% for(var j = 0; j < 5; j++) { %>
+                    <% if(p> 1) { %>
+                      <span class="star icon-star3"></span>
+                      <% p--; %>
+                    <% } else if(p == 0.5) { %>
+                      <span class="star icon-star2"></span>
+                      <% p = 0; %>
+                    <% } else { %>
+                      <span class="star icon-star"></span>
+                    <% } %>
+                  <% } %>
+                  (<%= books[i].pointNum %>)
+                </div>
+              </a>
+            </div>
+            <div class="edit">
+              ￥<%= books[i].price %><br/>
+              <span class="oldPrice">￥<%= books[i].oldprice %></span>
+              <div class="line"></div>
+              x <%= books[i].number %>
+            </div>
+          </li>
+          <% } %>
+          <% } %>
+        </ul>
+
+        <ul class="table-view booklist control-content" id="BooksInNervous">
+          <% for(var i = 0; i < books.length; i++) { %>
+          <% if(books[i].inNervous == true) { %>
+          <li class="table-view-cell">
+            <div class="check icon-radio-unchecked"></div>
+            <div class="image">
+              <a href="/book/cart/BooksInNervous/<%= books[i].id %>" data-ignore="push">
+                <img src="<%= books[i].img %>">
+              </a>
+            </div>
+            <div class="info">
+              <a href="/book/cart/BooksInNervous/<%= books[i].id %>" data-ignore="push">
+                <div class="id"><%= books[i].id %></div>
+                <div class="bookname"><%= books[i].name %></div>
+                <div class="other"><%= books[i].author %> [<%= books[i].type %>]</div>
+                <div class="other">
+                  <% var p = books[i].point; %>
+                  <% for(var j = 0; j < 5; j++) { %>
+                    <% if(p> 1) { %>
+                      <span class="star icon-star3"></span>
+                      <% p--; %>
+                    <% } else if(p == 0.5) { %>
+                      <span class="star icon-star2"></span>
+                      <% p = 0; %>
+                    <% } else { %>
+                      <span class="star icon-star"></span>
+                    <% } %>
+                  <% } %>
+                  (<%= books[i].pointNum %>)
+                </div>
+              </a>
+            </div>
+            <div class="edit">
+              ￥<%= books[i].price %><br/>
+              <% if(books[i].oldprice != -1) { %>
+              <span class="oldPrice">￥<%= books[i].oldprice %></span>
+              <div class="line"></div>
+              <% } %>
+              x <%= books[i].number %>
+            </div>
+          </li>
+          <% } %>
+          <% } %>
+        </ul>
+
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      $('.<%=type%>').addClass('active');
+      $('#<%=type%>').addClass('active');
+      $('.submit').click(function(){
+        $.ajax({
+          url: '/cart/',
+          type: 'POST',
+          data: getItems(),
+          contentType: false,
+          processData: false  
+        }).then(function(data){
+          window.location.href = "/user/order/" + data.orderid;
+        },function(){
+          alert('error');
+        });
+      });
+    </script>
+
   </body>
 </html>

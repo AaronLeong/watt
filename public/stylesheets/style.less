@@ -88,7 +88,7 @@ a {
 		white-space: nowrap;
 		div {
 			display: inline-table;
-			margin-right: 10px;
+			margin-right: 2px;
 			img {
 				height: 70px;
 			}
@@ -96,16 +96,18 @@ a {
 				display: block;
 				font-size: @normalFont;
 				line-height: @normalFont;
-				width: inherit;
+				width: 78px;
 				margin-bottom: 5px;
+				white-space: normal;
 			}
 			.other {
 				display: block;
 				font-size: 10px;
 				line-height: @normalFont;
 				color: @foreGray;
-				width: inherit;
+				width: 78px;
 				margin-bottom: 2px;
+				white-space: normal;
 			}
 		}
 	}
@@ -186,7 +188,7 @@ a {
 	}
 }
 
-#booklist {
+.booklist {
 	a {
 		width: 320px;
 	}
@@ -249,5 +251,93 @@ a {
 		line-height: 22px;
 		font-size: @smallFont;
 	}
+	.check {
+		vertical-align: top;
+		display: inline-block;
+		margin-top: 25px;
+		color: @foreGray;
+	}
+	.edit {
+		display: inline-block;
+		width: 50px;
+		text-align: right;
+		font-size: 12px;
+		line-height: 13px;
+		margin-top: 15px;
+		vertical-align: top;
+		.oldPrice {
+			color: @foreGray;
+		}
+		.line {
+			width: 55px;
+			height: 1px;
+			background-color: @foreGray;
+			position: relative;
+			top: -8px;
+		}
+	}
+	.checkall {
+		display: inline-block;
+		color: @foreGray;
+	}
+	.checkall-info {
+		display: inline-block;
+		font-size: 13px;
+		vertical-align: top;
+		line-height: 13px;
+		margin-top: 3px;
+	}
+	.total {
+		display: inline-block;
+		color: @DarkBlue;
+		font-size: 15px;
+		vertical-align: top;
+		line-height: 13px;
+		margin-top: 3px;
+		float: right;
+	}
+	.submit {
+		float: right;
+		background-color: @DarkBlue;
+		color: white;
+		font-size: 13px;
+		height: 20px;
+		width: 40px;
+		text-align: center;
+		margin-left: 10px;
+	}
 }
 
+.segmented-control {
+	margin: 10px 20px;
+}
+
+.qrcode-back {
+	position: absolute;
+	top: 0;
+	opacity: 0.6;
+	height: 100%;
+	width: 100%;
+	background-color: @backGray;
+	display: none;
+}
+
+.qrcode {
+	position: absolute;
+	top: 150px;
+	left: 50%;
+	margin-left: -100px;
+	width: 200px;
+	border: 5px solid white;
+	display: none;
+}
+
+#category {
+	position: absolute;
+	top: 44px;
+}
+
+.icon-checkmark {
+	float: right;
+	color: @DarkBlue;
+}

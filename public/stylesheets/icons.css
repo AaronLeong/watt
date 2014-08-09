@@ -110,6 +110,12 @@
 .icon-plus:before {
 	content: "\e624";
 }
+.icon-radio-checked:before {
+	content: "\e627";
+}
+.icon-radio-unchecked:before {
+	content: "\e628";
+}
 .icon-pin:before {
 	content: "\e610";
 }

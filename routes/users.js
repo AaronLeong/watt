@@ -107,6 +107,14 @@ router.post('/', function(req, res) {
 	res.json(data);
 });
 
+router.get('/logout', function(req, res) {
+	// 注销
+
+	// 删除用户的session
+
+	res.redirect('/user/login');
+});
+
 router.get('/login', function(req, res) {
 	res.render('user/login', {title: "登录"});
 });
@@ -161,6 +169,7 @@ router.get('/order/:id', function(req, res){
 		title: "账单详情",
 		type: "user",
 		url: "/user",
+		qrcode: "/images/1.png",		// 账单二维码url
 		id: id,
 		books: [						// 图书，数组，传入该订单下的全部图书
 			{
