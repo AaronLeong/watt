@@ -90,6 +90,32 @@ function checkConfirm() {
 	return false;
 }
 
+function getAmount() {
+	var amount = 0;
+	for(var i = 0; i < $('.icon-radio-checked').length; i++)
+	{
+		if($($('.icon-radio-checked')[i]).hasClass('checkall'))
+			continue;
+		var price = parseFloat($($('.icon-radio-checked')[i]).parent().find('.newprice').text());
+		var num = parseInt($($('.icon-radio-checked')[i]).parent().find('.num').text());
+		amount += price * num;
+	}
+	return amount.toFixed(2);
+}
+
+function getItems() {
+	var items = [];
+	for(var i = 0; i < $('.check.icon-radio-checked').length; i++)
+	{
+		var item = {
+			id: parseInt($($('.check.icon-radio-checked')[i]).parent().find('.id').text()),
+			num: parseInt($($('.check.icon-radio-checked')[i]).parent().find('.num').text())
+		}
+		items.push(item);
+	}
+	return items;
+}
+
 $(function(){
 	$("input[name$='username']").blur(function(){
 		checkUsername();
@@ -119,5 +145,82 @@ $(function(){
 	$('#index').find('.showAll').click(function(){
 		var id = $(this).find('.id').html();
 		window.location.href = "/booklist/" + id;
+	});
+
+	$('#book').find('.showAll').click(function(){
+		var id = $(this).find('.id').html();
+		window.location.href = "/booklist/" + id;
+	});
+
+	$('.check').click(function(){
+		if($(this).hasClass('icon-radio-unchecked')) {
+			$(this).removeClass('icon-radio-unchecked');
+			$(this).addClass('icon-radio-checked');
+		} else {
+			$(this).removeClass('icon-radio-checked');
+			$(this).addClass('icon-radio-unchecked');
+		}
+		$('.amount').text(getAmount());
+	});
+
+	$('.checkall').click(function(){
+		if($(this).hasClass('icon-radio-unchecked')) {
+			$(this).removeClass('icon-radio-unchecked');
+			$(this).addClass('icon-radio-checked');
+			$(this).parent().parent().find('.check').removeClass('icon-radio-unchecked');
+			$(this).parent().parent().find('.check').addClass('icon-radio-checked');
+		} else {
+			$(this).removeClass('icon-radio-checked');
+			$(this).addClass('icon-radio-unchecked');
+			$(this).parent().parent().find('.check').removeClass('icon-radio-checked');
+			$(this).parent().parent().find('.check').addClass('icon-radio-unchecked');
+		}
+		$('.amount').text(getAmount());
+	});
+
+	$('.control-item').click(function(){
+		$('.card>.active').removeClass('active');
+		$('.checkall').removeClass('icon-radio-checked');
+		$('.checkall').addClass('icon-radio-unchecked');
+		$('.check').removeClass('icon-radio-checked');
+		$('.check').addClass('icon-radio-unchecked');
+		$('#' + $(this).attr('class').split(' ')[1]).addClass('active');
+		$('.amount').text('0');
+	});
+
+	$('.icon-qrcode').click(function(){
+		if($('.qrcode').css('display') == 'none') {
+			$('.qrcode-back').show(300);
+			$('.qrcode').show(300);
+		} else {
+			$('.qrcode-back').hide(300);
+			$('.qrcode').hide(300);
+		}
+	});
+
+	$('#book').find('#price').click(function(){
+		var color = "rgb(17, 121, 141)";
+		if($(this).css('color') == color) {
+			$(this).css('background-color', color);
+			$(this).css('color', 'white');
+			$($(this).children()[0]).hide();
+			$($(this).children()[1]).show();
+		} else {
+			var id = parseInt($($(this).children()[2]).text());
+			$.ajax({
+				url: '/book/',
+				type: 'POST',
+				data: id,
+				contentType: false,
+				processData: false  
+	        }).then(function(data){
+				$('#price').css('background-color', "inherit");
+				$('#price').css('color', color);
+				$($('#price').children()[1]).hide();
+				$($('#price').children()[0]).show();
+	        },function(){
+	        	alert('error');
+	        });
+		}
 	});
 });

@@ -116,6 +116,14 @@ router.post('/', function(req, res) {
 	res.json(data);
 });
 
+router.get('/logout', function(req, res) {
+	// 注销
+
+	// 删除用户的session
+
+	res.redirect('/user/login');
+});
+
 router.get('/login', function(req, res) {
     if(req.session.user){
         res.redirect('/user');
@@ -195,6 +203,7 @@ router.get('/order/:id', function(req, res){
 		title: "账单详情",
 		type: "user",
 		url: "/user",
+		qrcode: "/images/1.png",		// 账单二维码url
 		id: id,
 		books: [						// 图书，数组，传入该订单下的全部图书
 			{
@@ -262,8 +271,95 @@ router.get('/book/:id', function(req, res) {
 	var id = req.params.id;
 	// data个数如下：
 	var data = {
+		id: id,
 		title: "图书详情",
 		name: "书名",						// 书名
+		img: "/images/3.png",				// 图书封面图片url
+		author: "作者",						// 作者
+		introduction: "图书简介blablabla",	// 图书简介
+		language: "中文",					// 语言
+		date: "2012-10-10",					// 出版日期
+		price: "99.99",						// 价格
+		isbn: "/images/5.png",				// ISBN码图片url
+		category: "小说",					// 图书类别
+		point: "3.5",						// 图书评分
+		pointRatio: [50, 20, 15, 10, 5],	// 每种评分所占百分比：按顺序分别为5星评分比例，4星评分比例，...，1星评分比例
+		comment: [{							// 评论数组
+			user: "user1",					// 用户
+			point: "2.5",					// 分数
+			datetime: "2012-3-8 13:20",		// 评论发布时间
+			content: "评论内容111"				// 评论内容
+		}, {
+			user: "user2",
+			point: "4.5",
+			datetime: "2012-3-8 13:20",
+			content: "评论内容222"
+		}],
+		booklists: [							// 图书列表数组
+			{
+				title: "同一作者的其他图书",					// 图书列表名称
+				id: 0,								// 由id确定图书列表内容
+				books: [							// 图书，数组，传入该订单下的全部图书
+					{
+						id: 0,					// id，用于获取图书详情
+						name: "书目qwertyuiop",			// 书名
+						img: "/images/4.png",	// 封面图片url
+						author: "文庆福",		// 作者
+						type: "百科",			// 类别
+						price: 99.99,			// 价格
+						number: 5,				// 购买数量
+						point: 3.5,				// 评分，0~5，保留整数或.5
+						pointNum: 100 			// 评论数量，即参与评分的人数
+					}, {
+						id: 0,					// id，用于获取图书详情
+						name: "书目",			// 书名
+						img: "/images/4.png",	// 封面图片url
+						author: "文庆福",		// 作者
+						type: "百科",			// 类别
+						price: 99.99,			// 价格
+						number: 10,				// 购买数量
+						point: 0,				// 评分，0~5，保留整数或.5
+						pointNum: 100 			// 评论数量，即参与评分的人数
+					}, {
+						id: 0,					// id，用于获取图书详情
+						name: "书目",			// 书名
+						img: "/images/4.png",	// 封面图片url
+						author: "文庆福",		// 作者
+						type: "百科",			// 类别
+						price: 99.99,			// 价格
+						number: 10,				// 购买数量
+						point: 5,				// 评分，0~5，保留整数或.5
+						pointNum: 100 			// 评论数量，即参与评分的人数
+					}
+				]
+			}, {
+				title: "该类别的其他热门图书",					// 图书列表名称
+				id: 0,								// 由id确定图书列表内容
+				books: [							// 图书，数组，传入该订单下的全部图书
+					{
+						id: 0,					// id，用于获取图书详情
+						name: "书目",			// 书名
+						img: "/images/4.png",	// 封面图片url
+						author: "文庆福",		// 作者
+						type: "百科",			// 类别
+						price: 99.99,			// 价格
+						number: 5,				// 购买数量
+						point: 3.5,				// 评分，0~5，保留整数或.5
+						pointNum: 100 			// 评论数量，即参与评分的人数
+					}, {
+						id: 0,					// id，用于获取图书详情
+						name: "书目",			// 书名
+						img: "/images/4.png",	// 封面图片url
+						author: "文庆福",		// 作者
+						type: "百科",			// 类别
+						price: 99.99,			// 价格
+						number: 10,				// 购买数量
+						point: 4.5,				// 评分，0~5，保留整数或.5
+						pointNum: 100 			// 评论数量，即参与评分的人数
+					}
+				]
+			}
+		],
 		type: "user",
 		url: "/user"
 	}
