@@ -17,8 +17,132 @@
       <% } %>
     </script>
 
-    <div class="content">
-      <%= name %>
+    <div class="content" id="book">
+      <div id="menu">
+        <img src="<%= img %>" id="img">
+        <div id="info">
+          <div><%= name %></div>
+          <div id="author"><%= author %> [<%= category %>]</div>
+          <div id="point">
+            <% var p = point; %>
+            <% for(var j = 0; j < 5; j++) { %>
+              <% if(p> 1) { %>
+                <span class="star icon-star3"></span>
+                <% p--; %>
+              <% } else if(p == 0.5) { %>
+                <span class="star icon-star2"></span>
+                <% p = 0; %>
+              <% } else { %>
+                <span class="star icon-star"></span>
+              <% } %>
+            <% } %>
+            (<%= comment.length %>)
+          </div>
+        </div>
+        <div id="price"><span>￥<%= price %></span><span style="display:none">购买</span><span class="id"><%= id %></span></div>
+        <div class="segmented-control" id="book-control">
+          <a class="control-item Intro active">详细信息</a>
+          <a class="control-item Comments">评论</a>
+          <a class="control-item Relative">相关项目</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="control-content active" id="Intro">
+          <div>图书简介</div>
+          <div class="info"><%= introduction %></div>
+          <div class="seperate"></div>
+          <div>信息</div>
+          <table class="info">
+            <tr><td>书名</td><td><%= name %></td></tr>
+            <tr><td>作者</td><td><%= author %></td></tr>
+            <tr><td>类别</td><td><%= category %></td></tr>
+            <tr><td>出版日期</td><td><%= date %></td></tr>
+            <tr><td>语言</td><td><%= language %></td></tr>
+          </table>
+          <div class="seperate"></div>
+          <div>ISBN</div>
+          <img id="isbn" src="<%= isbn %>">
+        </div>
+        <div class="control-content active" id="Comments">
+          <div>评分</div>
+          <table class="info small">
+            <tr><td class="pointStar">
+              <% var p = point; %>
+              <% for(var j = 0; j < 5; j++) { %>
+                <% if(p> 1) { %>
+                  <span class="star icon-star3"></span>
+                  <% p--; %>
+                <% } else if(p == 0.5) { %>
+                  <span class="star icon-star2"></span>
+                  <% p = 0; %>
+                <% } else { %>
+                  <span class="star icon-star"></span>
+                <% } %>
+              <% } %>
+              </td>
+              <td>共<%= comment.length %>个评分</td></tr>
+            <% for(var i = 0; i < pointRatio.length; i++) { %>
+            <tr>
+              <td>
+                <% for(var j = 0; j < i; j++) { %>
+                <span class="star icon-star"></span>
+                <% } %>
+                <% for(var j = 0; j < 5 - i; j++) { %>
+                <span class="star icon-star3"></span>
+                <% } %>
+              </td>
+              <td>
+                <div class="pointBack"><div class="point" style="width: <%= pointRatio[i] %>%"></div></div>
+              </td>
+            </tr>
+            <% } %>
+          </table>
+          <% for(var i = 0; i < comment.length; i++) { %>
+          <div class="seperate"></div>
+          <div><%= i+1 %>. <%= comment[i].user %></div>
+          <div class="info">
+            <div class="pointStar">
+              <% var p = comment[i].point; %>
+              <% for(var j = 0; j < 5; j++) { %>
+                <% if(p> 1) { %>
+                  <span class="star icon-star3"></span>
+                  <% p--; %>
+                <% } else if(p == 0.5) { %>
+                  <span class="star icon-star2"></span>
+                  <% p = 0; %>
+                <% } else { %>
+                  <span class="star icon-star"></span>
+                <% } %>
+              <% } %>
+            </div>
+            <div class="datetime"><%= comment[i].datetime %></div>
+            <div><%= comment[i].content %></div>
+          </div>
+          <% } %>
+        </div>
+        <div class="control-content active" id="Relative">
+          <ul class="table-view">
+            <% for(var i = 0; i < booklists.length; i++) { %>
+              <li class="table-view-cell">
+                <span><%= booklists[i].title %></span>
+                <span class="showAll"><p class="id"><%= booklists[i].id %></p>显示全部<span class="icon-arrow-right"></span></span>
+                <div class="bookList">
+                  <% for(var j = 0; j < booklists[i].books.length; j++) { %>
+                  <div class="book">
+                    <p class="id"><%= booklists[i].books[j].id %></p>
+                    <a href="/book/<%= booklists[i].books[j].id %>" data-ignore="push"><img src="<%= booklists[i].books[j].img %>"></a>
+                    <div class="bookname"><%= booklists[i].books[j].name %></div>
+                    <div class="other"><%= booklists[i].books[j].author %> [<%= booklists[i].books[j].type %>]</div>
+                    <div class="other">￥<%= booklists[i].books[j].price %></div>
+                  </div>
+                  <% } %>
+                </div>
+              </li>
+            <% } %>
+
+          </ul>
+        </div>
+      </div>
     </div>
 
   </body>

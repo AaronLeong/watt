@@ -92,8 +92,10 @@ function checkConfirm() {
 
 function getAmount() {
 	var amount = 0;
-	for(var i = 0; i < $('.icon-radio-checked').length - 1; i++)
+	for(var i = 0; i < $('.icon-radio-checked').length; i++)
 	{
+		if($($('.icon-radio-checked')[i]).hasClass('checkall'))
+			continue;
 		var price = parseFloat($($('.icon-radio-checked')[i]).parent().find('.newprice').text());
 		var num = parseInt($($('.icon-radio-checked')[i]).parent().find('.num').text());
 		amount += price * num;
@@ -145,6 +147,11 @@ $(function(){
 		window.location.href = "/booklist/" + id;
 	});
 
+	$('#book').find('.showAll').click(function(){
+		var id = $(this).find('.id').html();
+		window.location.href = "/booklist/" + id;
+	});
+
 	$('.check').click(function(){
 		if($(this).hasClass('icon-radio-unchecked')) {
 			$(this).removeClass('icon-radio-unchecked');
@@ -188,6 +195,32 @@ $(function(){
 		} else {
 			$('.qrcode-back').hide(300);
 			$('.qrcode').hide(300);
+		}
+	});
+
+	$('#book').find('#price').click(function(){
+		var color = "rgb(17, 121, 141)";
+		if($(this).css('color') == color) {
+			$(this).css('background-color', color);
+			$(this).css('color', 'white');
+			$($(this).children()[0]).hide();
+			$($(this).children()[1]).show();
+		} else {
+			var id = parseInt($($(this).children()[2]).text());
+			$.ajax({
+				url: '/book/',
+				type: 'POST',
+				data: id,
+				contentType: false,
+				processData: false  
+	        }).then(function(data){
+				$('#price').css('background-color', "inherit");
+				$('#price').css('color', color);
+				$($('#price').children()[1]).hide();
+				$($('#price').children()[0]).show();
+	        },function(){
+	        	alert('error');
+	        });
 		}
 	});
 });

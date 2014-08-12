@@ -9,13 +9,15 @@
     <script type="text/javascript">
       $('#header-title').text("购物车");
       $('#menu-cart').addClass('active');
+      var OnSaleNum = 0;
+      var InNervousNum = 0;
     </script>
 
     <div class="content">
       <div class="segmented-control">
-        <a class="control-item Books">全部图书(10)</a>
-        <a class="control-item BooksOnSale">降价图书(88)</a>
-        <a class="control-item BooksInNervous">库存紧张(88)</a>
+        <a class="control-item Books">全部图书(<%= books.length %>)</a>
+        <a class="control-item BooksOnSale">降价图书(<span id="OnSaleNum"></span>)</a>
+        <a class="control-item BooksInNervous">库存紧张(<span id="InNervousNum"></span>)</a>
       </div>
 
       <div class="card">
@@ -101,14 +103,20 @@
               </a>
             </div>
             <div class="edit">
-              ￥<%= books[i].price %><br/>
+              ￥<span class="newprice"><%= books[i].price %></span><br/>
               <span class="oldPrice">￥<%= books[i].oldprice %></span>
               <div class="line"></div>
-              x <%= books[i].number %>
+              x <span class="num"><%= books[i].number %></span>
             </div>
           </li>
           <% } %>
           <% } %>
+          <li class="table-view-cell">
+            <div class="checkall icon-radio-unchecked"></div>
+            <div class="checkall-info">全选</div>
+            <div class="submit">结算</div>
+            <div class="total">合计:￥<span class="amount">0</span></div>
+          </li>
         </ul>
 
         <ul class="table-view booklist control-content" id="BooksInNervous">
@@ -144,16 +152,22 @@
               </a>
             </div>
             <div class="edit">
-              ￥<%= books[i].price %><br/>
+              ￥<span class="newprice"><%= books[i].price %></span><br/>
               <% if(books[i].oldprice != -1) { %>
               <span class="oldPrice">￥<%= books[i].oldprice %></span>
               <div class="line"></div>
               <% } %>
-              x <%= books[i].number %>
+              x <span class="num"><%= books[i].number %></span>
             </div>
           </li>
           <% } %>
           <% } %>
+          <li class="table-view-cell">
+            <div class="checkall icon-radio-unchecked"></div>
+            <div class="checkall-info">全选</div>
+            <div class="submit">结算</div>
+            <div class="total">合计:￥<span class="amount">0</span></div>
+          </li>
         </ul>
 
       </div>
@@ -162,6 +176,8 @@
     <script type="text/javascript">
       $('.<%=type%>').addClass('active');
       $('#<%=type%>').addClass('active');
+      $('#OnSaleNum').text($('#BooksOnSale>li').length);
+      $('#InNervousNum').text($('#BooksInNervous>li').length);
       $('.submit').click(function(){
         $.ajax({
           url: '/cart/',
