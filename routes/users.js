@@ -1,19 +1,28 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+   , mongoose = require('mongoose')
+   , UserModel = require('../models/User.js')
+   , User = mongoose.model('User')
+   , crypto = require('crypto')
+   , router = express.Router();
+
 
 // 注意：data格式由注释给出，没有注释的内容为写死的，不必特别更改。例如：title
 
 /* GET users listing. */
 router.get('/', function(req, res) {
 	// 没有用户登录
-	// res.redirect('/user/login');
+	 if(!req.session.user){
+         res.redirect('/user/login');
+     }
+
 
 	// 有用户登录
 	// data格式如下：
+	var user = req.session.user;
 	var data = {
-		username: "cc",				// 用户名
-		email: "cc@c.com",			// 电子邮箱
-		cellphone: "13812345678",	// 手机号码
+		username: user.username,				// 用户名
+		email: user.email,			// 电子邮箱
+		cellphone: user.cellphone,	// 手机号码
 		orders: [					// 订单，数组，按照时间顺序由现在到过去
 			{
 				id: 0,				// 账单id
@@ -108,26 +117,40 @@ router.post('/', function(req, res) {
 });
 
 router.get('/login', function(req, res) {
-	res.render('user/login', {title: "登录"});
+    if(req.session.user){
+        res.redirect('/user');
+    }
+	else{
+        res.render('user/login', {title: "登录"});
+    }
 });
 
 router.post('/login', function(req, res) {
-	// 登录失败
-	/*
-	var data = {
-		fail: "[报错信息]"
-	};
-	*/
+    var md5 = crypto.createHash('md5');
+    var password = md5.update(req.body.password).digest('base64');
+    var username = req.body.username;
 
-	// 登录成功
-	// data格式如下
-	var data = {
-		success: 1
-	};
+    var data = {
+        fail: "",
+        success: 0
+    };
 
-	// 登录成功记录session
-
-	res.json(data);
+    User.findOne({username:username},function(err, user) {
+        if(!user){
+            data.fail = "用户名不存在";
+        }
+        else
+        {
+            if(user.password != password){
+                data.fail = "密码错误";
+            }
+            else{
+                data.success = 1;
+                req.session.user = user;     // 登录成功记录session
+            }
+        }
+        res.json(data);
+    });
 });
 
 router.get('/register', function(req, res) {
@@ -135,22 +158,33 @@ router.get('/register', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
-	// 登录失败
-	/*
-	var data = {
-		fail: "[报错信息]"
-	};
-	*/
+    var md5 = crypto.createHash('md5');
+    var password = md5.update(req.body.password).digest('base64');
+    var username = req.body.username;
+    var email = req.body.email;
+    var cellphone = req.body.cellphone;
 
-	// 登录成功
-	// data格式如下
-	var data = {
-		success: 1
-	};
-
-	// 登录成功记录session
-
-	res.json(data);
+    var data = {
+        fail: "",
+        success: 0
+    };
+    User.findOne({username:username},function(err, user){
+        if(!user){
+            var user = new User({
+                username:username,
+                password:password,
+                email:email,
+                cellphone:cellphone
+            });
+            user.save();
+            req.session.user = user;
+            data.success = 1;
+        }
+        else{
+            data.fail = "用户名已存在";
+        }
+        res.json(data);
+    });
 });
 
 router.get('/order/:id', function(req, res){

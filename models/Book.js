@@ -47,16 +47,3 @@ var BookScheme = new Schema({
 //访问Book对象模型
 mongoose.model('Book', BookScheme);
 var Book = mongoose.model('Book');
-
-exports.add = function(title,callback) {
-    var newBook = new Book();
-    newBook.title = title;
-    newBook.save(function(err){
-        if(err){
-            util.log("FATAL"+err);
-            callback(err);
-        }else{
-            callback(null);
-        }
-    });
-}

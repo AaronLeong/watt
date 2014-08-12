@@ -42,8 +42,7 @@
         $.ajax({  
           type: 'POST',
           data: $(this).serialize(),
-          contentType: false,
-          processData: false  
+          processData: false
         }).then(function(data){
           if(data.success) {
             window.location.href = "/user";

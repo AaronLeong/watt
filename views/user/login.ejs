@@ -12,8 +12,10 @@
     </script>
 
     <div class="content user-form">
-      <form method="post">
+      <form>
+        <div class="info"></div>
         <input type="text" name="username" placeholder="用户名/邮箱/手机号">
+        <div class="info"></div>
         <input type="password" name="password" placeholder="密码">
         <div class="info"></div>
         <button class="btn btn-mine btn-block" id="submit">登录</button>
@@ -25,18 +27,17 @@
         $.ajax({  
           type: 'POST',
           data: $(this).serialize(),
-          contentType: false,
           processData: false  
         }).then(function(data){
           if(data.success) {
             window.location.href = "/user";
           } else {
-            $('.info').text(data.fail);
-            $('.info').show();
+              $('#submit').prev().text(data.fail);
+              $('#submit').prev().show();
           }
         },function(){
-          $('.info').text("登录失败");
-          $('.info').show();
+          $('#submit').prev().text("登录失败");
+          $('#submit').prev().show();
         });
         return false;
       });
