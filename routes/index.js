@@ -1,5 +1,34 @@
 var express = require('express');
 var router = express.Router();
+var bookModule = require('../lib/book');
+
+var defaultBookStore;
+bookModule.getDefaultBookstore(function(err, store){
+    defaultBookStore = store;
+});
+
+var bookListInfo = {
+    '0': {
+        'title': '最新上架',
+        'id': 0,
+        'get': bookModule.getNewest
+    },
+    '1': {
+        'title': '最受好评',
+        'id': 1,
+        'get': bookModule.getHighestRating
+    },
+    '2': {
+        'title': '最低折扣',
+        'id': 2,
+        'get': bookModule.getLowestDiscount
+    },
+    '3': {
+        'title': '店长推荐',
+        'id': 3,
+        'get': bookModule.getRecommend
+    }
+};
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -9,7 +38,14 @@ router.get('/', function(req, res) {
 // 传入类别id，0为全部
 router.get('/category/:id', function(req, res) {
 	var id = req.params.id;
-	var data = {
+	if (id == 0){
+		getIndexList(function(err, data){
+	        res.render('index', data);
+	    });
+	} else {
+		// todo: 书籍类目数据库中没有明确定义
+	}
+	/*var data = {
 		title: '书城',
 		id: id,
 		categoryList: [							// 类别数组
@@ -249,20 +285,31 @@ router.get('/category/:id', function(req, res) {
 			}
 		]
 	}
-	res.render('index', data);
+	res.render('index', data);*/
 });
 
 router.get('/booklist/:id', function(req, res){
 	// 传入图书列表id，由id获取列表内书籍
 	// 该id与上面函数中“booklist”数组每一项的id一致
+    // todo: 琛哥是不是应该把booklist的id定义一下，现在都是0（我在变量bookListInfo中预定义了，可以看一下）
 	var id = req.params.id;
-	// data格式如下：
-	var data = {
+    bookListInfo[id].get(defaultBookStore._id, 100, function(err, books) {
+        var data = {
+            title: bookListInfo[id].title,					// 图书列表名称
+            id: bookListInfo[id].id,
+            type: "books",
+            url: "/",
+            books: convertBookList(books)
+        };
+        res.render('booklist', data);
+    });
+    // data格式如下：
+	/*var data = {
 		title: "最受好评",				// 列表名称
 		type: "books",
 		url: "/",
 		id: id,
-		books: [						// 图书，数组，传入该订单下的全部图书
+        books: [						// 图书，数组，传入该订单下的全部图书
 			{
 				id: 0,					// id，用于获取图书详情
 				name: "书目",			// 书名
@@ -320,7 +367,7 @@ router.get('/booklist/:id', function(req, res){
 			}
 		]
 	};
-	res.render('booklist', data);
+	res.render('booklist', data);*/
 });
 
 router.get('/book/location/:id', function(req, res) {
@@ -628,6 +675,15 @@ router.get('/book/:listid/:id', function(req, res) {
 router.get('/book/:id', function(req, res) {
 	// 由图书id获取图书信息
 	var id = req.params.id;
+    bookModule.findBookById(id, function(err, book){
+        if (err){
+            console.log(err);
+        } else {
+             // todo: 从book中提取出书籍详情需要的信息
+            // data = convertBook(book);
+            //res.render('book', data);
+        }
+    });
 	// data个数如下：
 	var data = {
 		id: id,
@@ -891,3 +947,81 @@ router.post('/book/', function(req, res) {
 });
 
 module.exports = router;
+
+function getIndexList(callback){
+    var data = {
+        title: '书城',
+        categoryList: [							// 类别数组
+			{
+				id: 0,							// 类别id
+				name: "全部类别"					// 类别名称
+			}
+		],
+        id: 0,
+        booklists: []
+    };
+    bookModule.getNewest(defaultBookStore._id, 10, function(err, books){
+        var list = {
+            title: "最新上架",					// 图书列表名称
+            id: 0,								// 由id确定图书列表内容
+            books: convertBookList(books)
+        };
+        data.booklists.push(list);
+        bookModule.getHighestRating(defaultBookStore._id, 10, function(err, books){
+            var list = {
+                title: "最受好评",					// 图书列表名称
+                id: 0,								// 由id确定图书列表内容
+                books: convertBookList(books)
+            };
+            data.booklists.push(list);
+            bookModule.getLowestDiscount(defaultBookStore._id, 10, function(err, books){
+                var list = {
+                    title: "最低折扣",					// 图书列表名称
+                    id: 0,								// 由id确定图书列表内容
+                    books: convertBookList(books)
+                };
+                data.booklists.push(list);
+                bookModule.getRecommend(defaultBookStore._id, 10, function(err, books){
+                    var list = {
+                        title: "店长推荐",					// 图书列表名称
+                        id: 0,								// 由id确定图书列表内容
+                        books: convertBookList(books)
+                    };
+                    data.booklists.push(list);
+                    callback(null, data);
+                });
+            });
+        });
+    });
+}
+
+function convertBook(book){
+    var result = {
+        id: book._id.toString(),					// id，用于获取图书详情
+        name: book.title,			// 书名
+        img: book.image,	// 封面图片url
+        author: book.author.join(', '),		// 作者
+        type: getType(book.tags),			// 类别
+        price: book.price || '未知',			// 价格
+        number: book.saleNumber,				// 购买数量
+        point: book.rating.average,				// 评分，0~5，保留整数或.5
+        pointNum: book.rating.numRaters 			// 评论数量，即参与评分的人数
+    }
+    return result;
+}
+
+function convertBookList(bookList){
+    var newList = [];
+    for (index in bookList){
+        newList.push(convertBook(bookList[index]));
+    }
+    return newList;
+}
+
+function getType(tags){
+    if (tags.length == 0){
+        return "未知";
+    } else {
+        return tags[0].name;
+    }
+}
