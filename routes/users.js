@@ -1,7 +1,5 @@
 var express = require('express')
-   , mongoose = require('mongoose')
-   , UserModel = require('../models/User.js')
-   , User = mongoose.model('User')
+   , User = require('../lib/model').user
    , crypto = require('crypto')
    , router = express.Router();
 
@@ -100,27 +98,54 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-	// 修改失败
-	/*
-	var data = {
-		fail: "[报错信息]"
-	};
-	*/
+    var data = {
+        fail: "",
+        success: 0
+    };
 
-	// 修改成功
-	// data格式如下
-	var data = {
-		success: 1
-	};
+    if (req.body.oldpass != undefined){
+        var md5 = crypto.createHash('md5');
+        var oldpass = md5.update(req.body.oldpass).digest('base64');
 
-	res.json(data);
+        User.findOne({username:req.session.user.username},function(err, user){
+            if(user.password != oldpass) {
+                data.fail = "密码错误";
+            }else{
+                var md5 = crypto.createHash('md5');
+                var password = md5.update(req.body.password).digest('base64');
+                user.password = password;
+                data.success = 1;
+                req.session.user = user;
+                user.save();
+            }
+            res.json(data);
+        });
+    }
+    else if (req.body.cellphone != undefined){
+        User.findOne({username:req.session.user.username},function(err, user){
+            user.cellphone = req.body.cellphone;
+            user.save();
+            data.success = 1;
+            req.session.user = user;
+            res.json(data);
+        });
+    }
+    else if (req.body.email != undefined){
+        User.findOne({username:req.session.user.username},function(err, user){
+            user.email = req.body.email;
+            user.save();
+            data.success = 1;
+            req.session.user = user;
+            res.json(data);
+        });
+    }
+
 });
 
 router.get('/logout', function(req, res) {
 	// 注销
 
-	// 删除用户的session
-
+	req.session.user = "";
 	res.redirect('/user/login');
 });
 
@@ -143,14 +168,14 @@ router.post('/login', function(req, res) {
         success: 0
     };
 
-    User.findOne({username:username},function(err, user) {
+    User.findOne({$or:[{username:username}, {email:username}, {cellphone:username}]},function(err, user) {
         if(!user){
-            data.fail = "用户名不存在";
+            data.fail = "用户名不存在或密码错误";
         }
         else
         {
             if(user.password != password){
-                data.fail = "密码错误";
+                data.fail = "用户名不存在或密码错误";
             }
             else{
                 data.success = 1;
@@ -176,7 +201,7 @@ router.post('/register', function(req, res) {
         fail: "",
         success: 0
     };
-    User.findOne({username:username},function(err, user){
+    User.findOne({$or:[{username:username}, {email:email}, {cellphone:cellphone}]},function(err, user){
         if(!user){
             var user = new User({
                 username:username,
@@ -189,7 +214,15 @@ router.post('/register', function(req, res) {
             data.success = 1;
         }
         else{
-            data.fail = "用户名已存在";
+            if(user.username == username) {
+                data.fail = "用户名已存在";
+            }
+            else if (user.email == email){
+                data.fail = "邮箱已存在";
+            }
+            else if (user.cellphone == cellphone){
+                data.fail = "手机号已存在"
+            }
         }
         res.json(data);
     });
@@ -362,7 +395,7 @@ router.get('/book/:id', function(req, res) {
 		],
 		type: "user",
 		url: "/user"
-	}
+	};
 	res.render('book', data);
 });
 
@@ -376,7 +409,7 @@ router.get('/book/:orderid/:id', function(req, res) {
 		name: "书名",						// 书名
 		type: "user",
 		url: "/user/order/" + orderid
-	}
+	};
 	res.render('book', data);
 });
 

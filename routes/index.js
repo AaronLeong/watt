@@ -38,14 +38,14 @@ router.get('/', function(req, res) {
 // 传入类别id，0为全部
 router.get('/category/:id', function(req, res) {
 	var id = req.params.id;
-	if (id == 0){
+	/*if (id == 0){
 		getIndexList(function(err, data){
 	        res.render('index', data);
 	    });
 	} else {
 		// todo: 书籍类目数据库中没有明确定义
-	}
-	/*var data = {
+	}*/
+	var data = {
 		title: '书城',
 		id: id,
 		categoryList: [							// 类别数组
@@ -285,7 +285,7 @@ router.get('/category/:id', function(req, res) {
 			}
 		]
 	}
-	res.render('index', data);*/
+	res.render('index', data);
 });
 
 router.get('/booklist/:id', function(req, res){

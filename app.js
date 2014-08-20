@@ -34,6 +34,16 @@ app.use(function(req, res, next) {
     next(err);
 });
 
+/// check login
+app.use(function (req, res, next) {
+    var url = req.originalUrl;
+    if (url != "/user" && !req.session.user) {
+        return res.redirect("/user/login");
+    }
+    next();
+});
+
+
 /// error handlers
 
 // development error handler

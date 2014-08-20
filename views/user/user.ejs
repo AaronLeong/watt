@@ -132,11 +132,9 @@
         if(check == false)
           return false;
 
-        $.ajax({  
+        $.ajax({
           type: 'POST',
-          data: $(this).serialize(),
-          contentType: false,
-          processData: false  
+          data: $(this).serialize()
         }).then(function(data){
           if(data.success) {
             $('.modal').removeClass('active');
@@ -160,11 +158,10 @@
         $.ajax({  
           type: 'POST',
           data: $(this).serialize(),
-          contentType: false,
           processData: false  
         }).then(function(data){
           if(data.success) {
-            $('.modal').removeClass('active');
+              window.location.href = "/user";
           } else {
             $('#submit').prev().text(data.fail);
             $('#submit').prev().show();
@@ -185,11 +182,10 @@
         $.ajax({  
           type: 'POST',
           data: $(this).serialize(),
-          contentType: false,
           processData: false  
         }).then(function(data){
           if(data.success) {
-            $('.modal').removeClass('active');
+              window.location.href = "/user";
           } else {
             $('#submit').prev().text(data.fail);
             $('#submit').prev().show();
