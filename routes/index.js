@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bookModule = require('../lib/book');
+var User_Order = require('../lib/model').user_order
 
 var defaultBookStore;
 bookModule.getDefaultBookstore(function(err, store){
@@ -64,9 +65,9 @@ router.get('/category/:id', function(req, res) {
 				books: [							// 图书，数组，传入该订单下的全部图书
 					{
 						id: 0,					// id，用于获取图书详情
-						name: "书目qwertyuiop",			// 书名
+						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 5,				// 购买数量
@@ -76,7 +77,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -86,7 +87,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -96,7 +97,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -106,7 +107,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -122,7 +123,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 5,				// 购买数量
@@ -132,7 +133,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -142,7 +143,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -152,7 +153,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -162,7 +163,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -178,7 +179,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 5,				// 购买数量
@@ -188,7 +189,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -198,7 +199,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -208,7 +209,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -218,7 +219,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -234,7 +235,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 5,				// 购买数量
@@ -244,7 +245,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -254,7 +255,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -264,7 +265,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -274,7 +275,7 @@ router.get('/category/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -314,7 +315,7 @@ router.get('/booklist/:id', function(req, res){
 				id: 0,					// id，用于获取图书详情
 				name: "书目",			// 书名
 				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
+				author: "迈克·贝克特尔",		// 作者
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				number: 0,
@@ -325,7 +326,7 @@ router.get('/booklist/:id', function(req, res){
 				id: 0,					// id，用于获取图书详情
 				name: "书目",			// 书名
 				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
+				author: "迈克·贝克特尔",		// 作者
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				number: 0,
@@ -336,7 +337,7 @@ router.get('/booklist/:id', function(req, res){
 				id: 0,					// id，用于获取图书详情
 				name: "书目",			// 书名
 				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
+				author: "迈克·贝克特尔",		// 作者
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				number: 0,
@@ -347,7 +348,7 @@ router.get('/booklist/:id', function(req, res){
 				id: 0,					// id，用于获取图书详情
 				name: "书目",			// 书名
 				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
+				author: "迈克·贝克特尔",		// 作者
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				number: 0,
@@ -358,7 +359,7 @@ router.get('/booklist/:id', function(req, res){
 				id: 0,					// id，用于获取图书详情
 				name: "书目",			// 书名
 				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
+				author: "迈克·贝克特尔",		// 作者
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				number: 0,
@@ -408,7 +409,7 @@ router.get('/book/location/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目qwertyuiop",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 5,				// 购买数量
@@ -418,7 +419,7 @@ router.get('/book/location/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -428,7 +429,7 @@ router.get('/book/location/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -444,7 +445,7 @@ router.get('/book/location/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 5,				// 购买数量
@@ -454,7 +455,7 @@ router.get('/book/location/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -509,7 +510,7 @@ router.get('/book/cart/:type/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目qwertyuiop",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 5,				// 购买数量
@@ -519,7 +520,7 @@ router.get('/book/cart/:type/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -529,7 +530,7 @@ router.get('/book/cart/:type/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -545,7 +546,7 @@ router.get('/book/cart/:type/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 5,				// 购买数量
@@ -555,7 +556,7 @@ router.get('/book/cart/:type/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -610,7 +611,7 @@ router.get('/book/:listid/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目qwertyuiop",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 5,				// 购买数量
@@ -620,7 +621,7 @@ router.get('/book/:listid/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -630,7 +631,7 @@ router.get('/book/:listid/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -646,7 +647,7 @@ router.get('/book/:listid/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 5,				// 购买数量
@@ -656,7 +657,7 @@ router.get('/book/:listid/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -675,7 +676,7 @@ router.get('/book/:listid/:id', function(req, res) {
 router.get('/book/:id', function(req, res) {
 	// 由图书id获取图书信息
 	var id = req.params.id;
-    bookModule.findBookById(id, function(err, book){
+     /* bookModule.findBookById(id, function(err, book){
         if (err){
             console.log(err);
         } else {
@@ -683,7 +684,7 @@ router.get('/book/:id', function(req, res) {
             // data = convertBook(book);
             //res.render('book', data);
         }
-    });
+    });*/
 	// data个数如下：
 	var data = {
 		id: id,
@@ -719,7 +720,7 @@ router.get('/book/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目qwertyuiop",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 5,				// 购买数量
@@ -729,7 +730,7 @@ router.get('/book/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -739,7 +740,7 @@ router.get('/book/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -755,7 +756,7 @@ router.get('/book/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 5,				// 购买数量
@@ -765,7 +766,7 @@ router.get('/book/:id', function(req, res) {
 						id: 0,					// id，用于获取图书详情
 						name: "书目",			// 书名
 						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",		// 作者
+						author: "迈克·贝克特尔",		// 作者
 						type: "百科",			// 类别
 						price: 99.99,			// 价格
 						number: 10,				// 购买数量
@@ -791,7 +792,7 @@ router.get('/location', function(req, res) {
 				id: 0,					// id，用于获取图书详情
 				name: "书目",			// 书名
 				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
+				author: "迈克·贝克特尔",		// 作者
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				number: 0,
@@ -802,7 +803,7 @@ router.get('/location', function(req, res) {
 				id: 0,					// id，用于获取图书详情
 				name: "书目",			// 书名
 				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
+				author: "迈克·贝克特尔",		// 作者
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				number: 0,
@@ -813,7 +814,7 @@ router.get('/location', function(req, res) {
 				id: 0,					// id，用于获取图书详情
 				name: "书目",			// 书名
 				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
+				author: "迈克·贝克特尔",		// 作者
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				number: 0,
@@ -824,7 +825,7 @@ router.get('/location', function(req, res) {
 				id: 0,					// id，用于获取图书详情
 				name: "书目",			// 书名
 				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
+				author: "迈克·贝克特尔",		// 作者
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				number: 0,
@@ -835,7 +836,7 @@ router.get('/location', function(req, res) {
 				id: 0,					// id，用于获取图书详情
 				name: "书目",			// 书名
 				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
+				author: "迈克·贝克特尔",		// 作者
 				type: "百科",			// 类别
 				price: 99.99,			// 价格
 				number: 0,
@@ -849,77 +850,35 @@ router.get('/location', function(req, res) {
 
 router.get('/cart/:type', function(req, res) {
 	var type = req.params.type;
-	var data = {
-		title: "购物车",
-		type: type,
-		books: [						// 图书，数组，传入该订单下的全部图书
-			{
-				id: 0,					// id，用于获取图书详情
-				name: "书目",			// 书名
-				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
-				type: "百科",			// 类别
-				price: 99.99,			// 价格
-				oldprice: 100,			// 原价，如原价与现价一致，则置为-1
-				number: 2,				// 购买数量
-				point: 3.5,				// 评分，0~5，保留整数或.5
-				pointNum: 100,			// 评论数量，即参与评分的人数
-				inNervous: true			// 如果库存紧张，置为true，否则置为false
-			},
-			{
-				id: 0,					// id，用于获取图书详情
-				name: "书目",			// 书名
-				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
-				type: "百科",			// 类别
-				price: 99.99,			// 价格
-				oldprice: -1,			
-				number: 5,
-				point: 4.5,				// 评分，0~5，保留整数或.5
-				pointNum: 100, 			// 评论数量，即参与评分的人数
-				inNervous: true			// 如果库存紧张，置为true，否则置为false
-			},
-			{
-				id: 0,					// id，用于获取图书详情
-				name: "书目",			// 书名
-				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
-				type: "百科",			// 类别
-				price: 99.99,			// 价格
-				oldprice: 100,
-				number: 3,
-				point: 0.5,				// 评分，0~5，保留整数或.5
-				pointNum: 100, 			// 评论数量，即参与评分的人数
-				inNervous: true	
-			},
-			{
-				id: 0,					// id，用于获取图书详情
-				name: "书目",			// 书名
-				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
-				type: "百科",			// 类别
-				price: 99.99,			// 价格
-				oldprice: -1,			
-				number: 1,
-				point: 0,				// 评分，0~5，保留整数或.5
-				pointNum: 100, 			// 评论数量，即参与评分的人数
-				inNervous: false	
-			},
-			{
-				id: 0,					// id，用于获取图书详情
-				name: "书目",			// 书名
-				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
-				type: "百科",			// 类别
-				price: 99.99,			// 价格
-				oldprice: -1,			
-				number: 1,
-				point: 5,				// 评分，0~5，保留整数或.5
-				pointNum: 100, 			// 评论数量，即参与评分的人数
-				inNervous: false	
-			}
-		]
-	}
+    var books = new Array();
+    var book = {
+            id: 0,					// id，用于获取图书详情
+            name: "书目",			// 书名
+            img: "/images/4.png",	// 封面图片url
+            author: "迈克·贝克特尔",		// 作者
+            type: "百科",			// 类别
+            price: 99.99,			// 价格
+            oldprice: 100,			// 原价，如原价与现价一致，则置为-1
+            number: 2,				// 购买数量
+            point: 3.5,				// 评分，0~5，保留整数或.5
+            pointNum: 100,			// 评论数量，即参与评分的人数
+            inNervous: true			// 如果库存紧张，置为true，否则置为false
+        };
+    var amount = 0;                  // 总计费用
+    if(req.session.cart){
+        for(var i = 0; i < req.session.cart.length; i++) {
+            book.id = req.session.cart[i];
+            book.num = 1;
+            amount += book.price * book.number;
+            books.push(book);
+        }
+    }
+    var data = {
+        title: "购物车",
+        type: type,
+        books: books,
+        amount: amount.toFixed(2)
+    };
 	res.render('cart', data);
 });
 
@@ -942,7 +901,17 @@ router.post('/book/', function(req, res) {
 	// 数据为图书id，每个购买一本
 	// 添加到购物车，无需返回特殊数据
 
-	var data = {}
+	var id = parseInt(req.body.id);
+    //res.cookie('cart', 'name1=value1&name2=value2', {maxAge:10*1000, path:'/', httpOnly:true});
+    if(req.session.cart){
+         req.session.cart.push(id);
+    }
+    else {
+        var cart = new Array();
+        cart.push(id);
+        req.session.cart = cart;
+    }
+    var data = 1;
 	res.json(data);
 });
 

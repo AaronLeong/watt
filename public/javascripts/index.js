@@ -113,7 +113,10 @@ function getItems() {
 		}
 		items.push(item);
 	}
-	return items;
+    var str = "";
+    for(var i = 0; i< items.length; i++)
+        str += "&"+jQuery.param(items[i]);
+	return str;
 }
 
 $(function(){
@@ -159,6 +162,8 @@ $(function(){
 		} else {
 			$(this).removeClass('icon-radio-checked');
 			$(this).addClass('icon-radio-unchecked');
+            $('.checkall').removeClass('icon-radio-checked');
+            $('.checkall').addClass('icon-radio-unchecked');
 		}
 		$('.amount').text(getAmount());
 	});
@@ -210,16 +215,15 @@ $(function(){
 			$.ajax({
 				url: '/book/',
 				type: 'POST',
-				data: id,
-				contentType: false,
-				processData: false  
+				data: "id="+id+"&num="+"1",
+                processData: false
 	        }).then(function(data){
 				$('#price').css('background-color', "inherit");
 				$('#price').css('color', color);
 				$($('#price').children()[1]).hide();
 				$($('#price').children()[0]).show();
 	        },function(){
-	        	alert('error');
+	        	console.log('error');
 	        });
 		}
 	});
