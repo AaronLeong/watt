@@ -48,7 +48,7 @@ function checkEmail() {
 
 function checkCellphone() {
 	var cellphone = $("input[name$='cellphone']");
-	var reg = /^(((13[0-9]{1})|159|153)+\d{8})$/;
+	var reg = /^1[3|4|5|7|8][0-9]{9}$/;/^(((13[0-9]{1})|159|153)+\d{8})$/;
 	if(!cellphone.val()) {
 		cellphone.prev().text('手机号码不能为空');
 		cellphone.prev().show();
@@ -108,34 +108,39 @@ function getItems() {
 	for(var i = 0; i < $('.check.icon-radio-checked').length; i++)
 	{
 		var item = {
-			id: parseInt($($('.check.icon-radio-checked')[i]).parent().find('.id').text()),
+			id: $($('.check.icon-radio-checked')[i]).parent().find('.id').text(),
 			num: parseInt($($('.check.icon-radio-checked')[i]).parent().find('.num').text())
 		}
 		items.push(item);
 	}
-	return items;
+    var str = "";
+    for(var i = 0; i< items.length; i++)
+        str += "&"+jQuery.param(items[i]);
+	return str;
 }
 
 $(function(){
-	$("input[name$='username']").blur(function(){
-		checkUsername();
-	});
+    if (location.pathname.indexOf('login') < 0){
+        $("input[name$='username']").blur(function(){
+            checkUsername();
+        });
 
-	$("input[name$='email']").blur(function(){
-		checkEmail();
-	});
+        $("input[name$='email']").blur(function(){
+            checkEmail();
+        });
 
-	$("input[name$='cellphone']").blur(function(){
-		checkCellphone();
-	});
+        $("input[name$='cellphone']").blur(function(){
+            checkCellphone();
+        });
 
-	$("input[name$='password']").blur(function(){
-		checkPassword();
-	});
+        $("input[name$='password']").blur(function(){
+            checkPassword();
+        });
 
-	$("input[name$='confirm']").blur(function(){
-		checkConfirm();
-	});
+        $("input[name$='confirm']").blur(function(){
+            checkConfirm();
+        });
+    }
 
 	$('#user-orders').find('.showAll').click(function(){
 		var id = $(this).find('.id').html();
@@ -159,6 +164,8 @@ $(function(){
 		} else {
 			$(this).removeClass('icon-radio-checked');
 			$(this).addClass('icon-radio-unchecked');
+            $('.checkall').removeClass('icon-radio-checked');
+            $('.checkall').addClass('icon-radio-unchecked');
 		}
 		$('.amount').text(getAmount());
 	});
@@ -206,20 +213,19 @@ $(function(){
 			$($(this).children()[0]).hide();
 			$($(this).children()[1]).show();
 		} else {
-			var id = parseInt($($(this).children()[2]).text());
+			var id = $($(this).children()[2]).text();
 			$.ajax({
 				url: '/book/',
 				type: 'POST',
-				data: id,
-				contentType: false,
-				processData: false  
+				data: "id="+id+"&num="+"1",
+                processData: false
 	        }).then(function(data){
 				$('#price').css('background-color', "inherit");
 				$('#price').css('color', color);
 				$($('#price').children()[1]).hide();
 				$($('#price').children()[0]).show();
 	        },function(){
-	        	alert('error');
+	        	console.log('error');
 	        });
 		}
 	});

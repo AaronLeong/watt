@@ -2,6 +2,10 @@ var express = require('express')
    , User = require('../lib/model').user
    , crypto = require('crypto')
    , router = express.Router();
+var model = require('../lib/model');
+var bookModule = require('../lib/book');
+var ObjectId = require('mongoose').Types.ObjectId;
+var Index = require('./index');
 
 
 // 注意：data格式由注释给出，没有注释的内容为写死的，不必特别更改。例如：title
@@ -20,81 +24,16 @@ router.get('/', function(req, res) {
 	var data = {
 		username: user.username,				// 用户名
 		email: user.email,			// 电子邮箱
-		cellphone: user.cellphone,	// 手机号码
-		orders: [					// 订单，数组，按照时间顺序由现在到过去
-			{
-				id: 0,				// 账单id
-				date: "2014-5-5",	// 订单时间
-				price: 20,			// 订单价格
-				books: [			// 图书，数组，如果数目过多，只传入20（或更少）个即可
-					{
-						id: 0,					// id，用于获取图书详情
-						name: "书目",			// 书名
-						img: "/images/1.png",	// 封面图片url
-						author: "郑灿彬",		// 作者
-						type: "历史",			// 类别
-						price: 99.99			// 价格
-					},
-					{
-						id: 1,
-						name: "书目",			// 书名
-						img: "/images/2.png",	// 封面图片url
-						author: "文庆福",
-						type: "百科",
-						price: 99.99
-					},
-					{
-						id: 2,
-						name: "书目",			// 书名
-						img: "/images/3.png",	// 封面图片url
-						author: "储超群",
-						type: "写实",
-						price: 99.99
-					},
-					{
-						id: 3,
-						name: "书目",			// 书名
-						img: "/images/4.png",	// 封面图片url
-						author: "王学成",
-						type: "小说",
-						price: 99.99
-					},
-					{
-						id: 4,
-						name: "书目",			// 书名
-						img: "/images/5.png",	// 封面图片url
-						author: "林梓佳",
-						type: "写真",
-						price: 99.99
-					}
-				]
-			},
-			{
-				id: 1,							// 账单id
-				date: "2012-10-10",
-				price: 20,
-				books: [
-					{
-						id: 0,
-						name: "书目",			// 书名
-						img: "/images/4.png",	// 封面图片url
-						author: "文庆福",
-						type: "百科",
-						price: 99.99
-					},
-					{
-						id: 1,
-						name: "书目",			// 书名
-						img: "/images/5.png",	// 封面图片url
-						author: "文庆福",
-						type: "百科",
-						price: 99.99
-					}
-				]
-			}
-		]
+		cellphone: user.cellphone	// 手机号码
 	};
-  	res.render('user/user', data);
+    getOrders(req.session.user._id, function(err, orders){
+        if (err){
+            // todo: error handling
+        } else {
+            data.orders = orders;
+            res.render('user/user', data);
+        }
+    });
 });
 
 router.post('/', function(req, res) {
@@ -232,71 +171,49 @@ router.get('/order/:id', function(req, res){
 	// 传入账单id，由id获取账单内信息
 	var id = req.params.id;
 	// data格式如下：
-	var data = {
-		title: "账单详情",
-		type: "user",
-		url: "/user",
-		qrcode: "/images/1.png",		// 账单二维码url
-		id: id,
-		books: [						// 图书，数组，传入该订单下的全部图书
-			{
-				id: 0,					// id，用于获取图书详情
-				name: "书目",			// 书名
-				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
-				type: "百科",			// 类别
-				price: 99.99,			// 价格
-				number: 5,				// 购买数量
-				point: 3.5,				// 评分，0~5，保留整数或.5
-				pointNum: 100 			// 评论数量，即参与评分的人数
-			},
-			{
-				id: 0,					// id，用于获取图书详情
-				name: "书目",			// 书名
-				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
-				type: "百科",			// 类别
-				price: 99.99,			// 价格
-				number: 10,				// 购买数量
-				point: 4.5,				// 评分，0~5，保留整数或.5
-				pointNum: 100 			// 评论数量，即参与评分的人数
-			},
-			{
-				id: 0,					// id，用于获取图书详情
-				name: "书目",			// 书名
-				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
-				type: "百科",			// 类别
-				price: 99.99,			// 价格
-				number: 10,				// 购买数量
-				point: 0.5,				// 评分，0~5，保留整数或.5
-				pointNum: 100 			// 评论数量，即参与评分的人数
-			},
-			{
-				id: 0,					// id，用于获取图书详情
-				name: "书目",			// 书名
-				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
-				type: "百科",			// 类别
-				price: 99.99,			// 价格
-				number: 10,				// 购买数量
-				point: 0,				// 评分，0~5，保留整数或.5
-				pointNum: 100 			// 评论数量，即参与评分的人数
-			},
-			{
-				id: 0,					// id，用于获取图书详情
-				name: "书目",			// 书名
-				img: "/images/4.png",	// 封面图片url
-				author: "文庆福",		// 作者
-				type: "百科",			// 类别
-				price: 99.99,			// 价格
-				number: 10,				// 购买数量
-				point: 5,				// 评分，0~5，保留整数或.5
-				pointNum: 100 			// 评论数量，即参与评分的人数
-			}
-		]
-	};
-	res.render('booklist', data);
+    if (req.session.user){
+        model.order.findById(id, function(err, order){
+            if (err){
+                // todo: 添加错误处理
+            } else {
+                var data = {
+                    title: '账单详情',
+                    type: 'user',
+                    url: '/user',
+                    qrcode: "/images/1.png",
+                    id: id,
+                    books: []
+                };
+                for (var i=0; i<order.books.length; i++){
+                    (function(){
+                        var index = i;
+                        bookModule.findBookById(order.books[i].id, function(err, book){
+                            if (err){
+                                // todo: 错误处理
+                            } else {
+                                data.books.push({
+                                    id: book._id.toString(),
+                                    name: book.title,
+                                    img: book.image,
+                                    author: book.author.join(', '),
+                                    type: getType(book.tags),
+                                    price: order.books[index].price,
+                                    number: order.books[index].count,
+                                    point: book.rating.average,
+                                    pointNum: book.rating.numRaters
+                                });
+                                if (data.books.length === order.books.length){
+                                    res.render('booklist', data);
+                                }
+                            }
+                        });
+                    }());
+                }
+            }
+        });
+    } else {
+        res.redirect('/user/login');
+    }
 });
 
 router.get('/book/:id', function(req, res) {
@@ -414,3 +331,79 @@ router.get('/book/:orderid/:id', function(req, res) {
 });
 
 module.exports = router;
+
+function getOrders(userId, callback){
+    if (typeof userId === 'string') userId = new ObjectId(userId);
+    model.order.find({user: userId}, function(err, orders){
+        if (err){
+            callback(err, null);
+        } else {
+            var result = [];
+            for (var i=0; i<orders.length; i++){
+                getOrderById(orders[i]._id, function(err, order){
+                    result.push(order);
+                    if (result.length === orders.length){
+                        callback(null, result);
+                    }
+                });
+            }
+        }
+    });
+}
+
+function getOrderById(orderId, callback){
+    if (typeof orderId === 'string') orderId = new ObjectId(orderId);
+    model.order.findById(orderId, function(err, order){
+        if (err){
+            callback(err, null);
+        } else {
+            var data = {
+                title: '账单详情',
+                type: 'user',
+                url: '/user',
+                qrcode: "/images/1.png",
+                id: orderId,
+                date: formatDate(order.date),
+                price: order.total_price,
+                books: []
+            };
+            for (var i=0; i<order.books.length; i++){
+                (function(){
+                    var index = i;
+                    bookModule.findBookById(order.books[i].id, function(err, book){
+                        if (err){
+                            // todo: 错误处理
+                        } else {
+                            data.books.push({
+                                id: book._id.toString(),
+                                name: book.title,
+                                img: book.image,
+                                author: book.author.join(', '),
+                                type: getType(book.tags),
+                                price: order.books[index].price,
+                                number: order.books[index].count,
+                                point: book.rating.average,
+                                pointNum: book.rating.numRaters
+                            });
+                            if (data.books.length === order.books.length){
+                                callback(null, data);
+                            }
+                        }
+                    });
+                }());
+            }
+        }
+    });
+}
+
+function getType(tags){
+    if (tags.length == 0){
+        return "未知";
+    } else {
+        return tags[0].name;
+    }
+}
+
+function formatDate(date){
+    return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+}

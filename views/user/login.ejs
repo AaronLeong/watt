@@ -23,6 +23,7 @@
         <button class="btn btn-mine btn-block" id="submit">登录</button>
         <a href="/user/register/" class="btn btn-mine btn-block" id="register">注册</a>
       </form>
+
     </div>
 
     <script type="text/javascript">
@@ -44,6 +45,10 @@
         });
         return false;
       });
+
+      $('#register').click(function(){
+          location.pathname = $(this).attr('href');
+      })
     </script>
 
   </body>
