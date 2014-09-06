@@ -57,7 +57,7 @@
                 <% for(var j = 0; j < orders[i].books.length; j++) { %>
                 <div class="book">
                   <p class="id"><%= orders[i].books[j].id %></p>
-                  <a href="/user/book/<%= orders[i].books[j].id %>" data-ignore="push"><img src="<%= orders[i].books[j].img %>"></a>
+                  <a href="/book/<%= orders[i].books[j].id %>" data-ignore="push"><img src="<%= orders[i].books[j].img %>"></a>
                   <div class="bookname"><%= orders[i].books[j].name %></div>
                   <div class="other"><%= orders[i].books[j].author %> [<%= orders[i].books[j].type %>]</div>
                   <div class="other">￥<%= orders[i].books[j].price %></div>

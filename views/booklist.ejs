@@ -24,19 +24,19 @@
       <ul class="table-view booklist" id="booklist">
         <% for(var i = 0; i < books.length; i++) { %>
         <li class="table-view-cell">
-          <% if(type == "user") { %>
-          <a href="/user/book/<%= id %>/<%= books[i].id %>" data-ignore="push">
-          <% } else if(type == "books") { %>
+          <!--<% if(type == "user") { %>-->
+          <!--<a href="/user/book/<%= id %>/<%= books[i].id %>" data-ignore="push">-->
+          <!--<% } else if(type == "books") { %>-->
           <a href="/book/<%= id %>/<%= books[i].id %>" data-ignore="push">
-          <% } else if(type == "location") { %>
-          <a href="/book/location/<%= books[i].id %>" data-ignore="push">
-          <% } %>
+          <!--<% } else if(type == "location") { %>-->
+          <!--<a href="/book/location/<%= books[i].id %>" data-ignore="push"> -->
+          <!--<% } %>-->
             <div class="image">
               <img src="<%= books[i].img %>">
             </div>
             <div class="info">
               <div class="id"><%= books[i].id %></div>
-              <div class="bookname"><%= books[i].name %></div>
+              <div class="bookname"><a href="<%= '/book/' + books[i].id %>"><%= books[i].name %></a></div>
               <div class="other"><%= books[i].author %> [<%= books[i].type %>]</div>
               <div class="other">
                 <% var p = books[i].point; %>
@@ -67,6 +67,23 @@
         <img src="<%= qrcode %>" class="qrcode">
       <% } %>
     </div>
+    <script>
+        $(function(){
+            // hide qrcode when clicking the background of qrcode
+            $('.qrcode-back').click(function(event){
+                $(this).hide(300);
+                $('.qrcode').hide(300);
+                event.stopPropagation();
+            });
 
+            $('.qrcode').click(function(event){
+                event.stopPropagation();
+            });
+
+            $('.bookname a').click(function(event){
+                location.pathname = $(this).attr('href');
+            });
+        });
+    </script>
   </body>
 </html>
