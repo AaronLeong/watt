@@ -1,6 +1,6 @@
 <header class="bar bar-nav header">
 	<a class="pull-left" id="header-left" data-ignore="push"></a>
-	<a class="icon icon-barcode pull-right" id="header-right" data-ignore="push"></a>
+	<a class="icon icon-barcode pull-right" id="header-right" data-ignore="push" href="javascript:void(0)" onclick="window.watt.scanBarCode()"></a>
   <div class="title" id="header-title">
   	<a href="#searchModal">
     	<span class="icon-search"></span>
@@ -14,7 +14,7 @@
     <span class="icon icon-books"></span>
     <span class="tab-label">书店</span>
   </a>
-  <a class="tab-item" href="/location/1111111111" id="menu-location" data-ignore="push">
+  <a class="tab-item" href="javascript:void(0);" onclick="redirect_location()" id="menu-location" data-ignore="push">
     <span class="icon icon-location"></span>
     <span class="tab-label">位置</span>
   </a>
@@ -43,4 +43,13 @@
       //提交表单
     }
   });
+  function redirect_location()
+  {
+      var st = window.watt.getBeacon();
+      window.location.href="/location/"+st;
+  };
+  function getISBN(st)
+  {
+      alert(st);
+  }
 </script>
