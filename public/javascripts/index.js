@@ -186,12 +186,14 @@ $(function(){
 	});
 
 	$('.control-item').click(function(){
-		$('.card>.active').removeClass('active');
+        $('.card .active').removeClass('active');
+		$('.control-item.active').removeClass('active');
 		$('.checkall').removeClass('icon-radio-checked');
 		$('.checkall').addClass('icon-radio-unchecked');
 		$('.check').removeClass('icon-radio-checked');
 		$('.check').addClass('icon-radio-unchecked');
-		$('#' + $(this).attr('class').split(' ')[1]).addClass('active');
+        $('#' + $(this).attr('class').split(' ')[1]).addClass('active');
+		$('.control-item.' + $(this).attr('class').split(' ')[1]).addClass('active');
 		$('.amount').text('0');
 	});
 
