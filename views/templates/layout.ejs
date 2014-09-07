@@ -43,13 +43,16 @@
       //提交表单
     }
   });
+
   function redirect_location()
   {
       var st = window.watt.getBeacon();
       window.location.href="/location/"+st;
   };
+
   function getISBN(st)
   {
-      alert(st);
+      //alert(st);
+      location.pathname = '/bookisbn/' + st;
   }
 </script>

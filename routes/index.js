@@ -108,6 +108,18 @@ router.get('/book/:listid/:id', function(req, res) {
     });
 });
 
+router.get('/bookisbn/:id', function(req, res){
+    var isbn_id = req.params.id;
+    bookModule.findBookByIsbn13(isbn_id, function(err, book){
+        if (err){
+            // todo: error handling for not finding a book with specific isbn
+            res.render('error', err);
+        } else {
+            res.render('book', book);
+        }
+    });
+});
+
 router.get('/book/:id', function(req, res) {
 	// 由图书id获取图书信息
 	var id = req.params.id;
