@@ -187,7 +187,8 @@
           data: getItems(),
           processData: false  
         }).then(function(data){
-          window.location.href = "/user/order/" + data.orderid;
+          //window.location.href = "/user/order/" + data.orderid;
+            location.pathname = '/user/order/jump/' + data.orderid;
         },function(){
           alert('error');
         });

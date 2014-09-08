@@ -241,6 +241,11 @@ router.get('/book/:orderid/:id', function(req, res) {
     });
 });
 
+router.get('/order/jump/:id', function(req, res){
+    var orderId = req.params.id;
+    res.render('jump', {orderId: orderId})
+});
+
 module.exports = router;
 
 function getOrders(userId, callback){
@@ -316,5 +321,8 @@ function getType(tags){
 }
 
 function formatDate(date){
-    return date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+    if (date)
+        return date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+    else
+        return '';
 }

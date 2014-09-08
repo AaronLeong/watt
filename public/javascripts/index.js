@@ -48,7 +48,7 @@ function checkEmail() {
 
 function checkCellphone() {
 	var cellphone = $("input[name$='cellphone']");
-	var reg = /^1[3|4|5|7|8][0-9]{9}$/;/^(((13[0-9]{1})|159|153)+\d{8})$/;
+	var reg = /^1[3|4|5|7|8][0-9]{9}$/; ///^(((13[0-9]{1})|159|153)+\d{8})$/;
 	if(!cellphone.val()) {
 		cellphone.prev().text('手机号码不能为空');
 		cellphone.prev().show();

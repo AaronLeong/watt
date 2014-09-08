@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--<title>title</title>-->
+    <% include templates/head.ejs %>
+</head>
+<body>
+    <h4 id='checkout-message' style="margin-top: 8px" order-id="<%= orderId%>">支付成功, 正在返回商城...</h4>
+    <script>
+        $(function(){
+            setTimeout('jump()', 3000)
+        });
+        function jump(){
+            var orderId = $('#checkout-message').attr('order-id');
+            location.pathname = '/user/order/' + orderId;
+        }
+    </script>
+</body>
+</html>

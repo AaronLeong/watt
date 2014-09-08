@@ -133,7 +133,7 @@ router.get('/book/:id', function(req, res) {
 });
 
 router.get('/location/:ibeacon', function(req, res) {
-    var ibeacon = req.params.ibeacon;
+    var ibeacon = req.params.ibeacon.toUpperCase();
     bookModule.findBookByIBeaconSortByBook(ibeacon, "-rating.numRaters", 100, function(err, bookList){
         var data = {
             title: "附近的图书",
@@ -150,7 +150,7 @@ router.get('/cart/:type', function(req, res) {
 	var type = req.params.type;
     var books = new Array();
     var total_price = 0, count = 0;                  // 总计费用
-    if(req.session.cart){
+    if(req.session.cart && req.session.cart.length > 0){
         for(var i = 0; i < req.session.cart.length; i++) {
             (function(){
                 var j = i;
@@ -232,6 +232,8 @@ router.post('/checkout/', function(req, res) {
                                     order.save(function(err){
                                         if (err){
                                             orderid = -1;
+                                        } else {
+                                            req.session.cart = [];
                                         }
                                         res.json({
                                             orderid: orderid
@@ -362,7 +364,7 @@ function convertBook(book){
         type: getType(book.tags),			// 类别
         price: parseFloat(book.price).toFixed(2) || '未知',			// 价格
         oldprice: -1,
-        number: book.saleNumber,				// 购买数量
+        number: book.remain,				// 购买数量
         point: book.rating.average,				// 评分，0~5，保留整数或.5
         pointNum: book.rating.numRaters 			// 评论数量，即参与评分的人数
     };
@@ -400,7 +402,7 @@ function getBookDetail(id, callback){
                 author: book.author.join(', '),						// 作者
                 introduction: book.introduction,	// 图书简介
                 language: "中文",					// 语言
-                date: book.pubdate.getFullYear() + '-' + book.pubdate.getMonth() + '-' + book.pubdate.getDate(),					// 出版日期
+                date: formatDate(book.pubdate) || '未知',					// 出版日期
                 price: book.price || '未知',						// 价格
                 isbn: book.isbn13,				// ISBN码图片url
                 category: getType(book.tags),					// 图书类别
@@ -488,4 +490,12 @@ function getBookDetail(id, callback){
             callback(null, result);
         }
     });
+}
+
+
+function formatDate(date){
+    if (date)
+        return date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+    else
+        return '';
 }

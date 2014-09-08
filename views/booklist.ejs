@@ -15,8 +15,9 @@
         $('#header-left').attr('href', '<%= url %>');
       <% } %>
       <% if(title == "账单详情") { %>
-        $('#header-right').removeClass('icon-barcode');
-        $('#header-right').addClass('icon-qrcode');
+      //        $('#header-right').removeClass('icon-barcode');
+      //      $('#header-right').addClass('icon-qrcode');
+      $('#header-right').replaceWith('<a class="icon icon-qrcode pull-right" id="header-right" data-ignore="push" href="javascript:void(0)"></a>');
       <% } %>
     </script>
 
@@ -36,7 +37,7 @@
             </div>
             <div class="info">
               <div class="id"><%= books[i].id %></div>
-              <div class="bookname"><a href="<%= '/book/' + books[i].id %>"><%= books[i].name %></a></div>
+              <div class="bookname"><a href="<%= '/book/' + books[i].id %>" data-ignore="push"><%= books[i].name %></a></div>
               <div class="other"><%= books[i].author %> [<%= books[i].type %>]</div>
               <div class="other">
                 <% var p = books[i].point; %>
@@ -80,9 +81,9 @@
                 event.stopPropagation();
             });
 
-            $('.bookname a').click(function(event){
-                location.pathname = $(this).attr('href');
-            });
+//            $('.bookname a').click(function(event){
+//                location.pathname = $(this).attr('href');
+//            });
         });
     </script>
   </body>

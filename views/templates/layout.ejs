@@ -1,7 +1,7 @@
 <header class="bar bar-nav header">
 	<a class="pull-left" id="header-left" data-ignore="push"></a>
-	<a class="icon icon-barcode pull-right" id="header-right" data-ignore="push" href="javascript:void(0)" onclick="window.watt.scanBarCode()"></a>
-  <div class="title" id="header-title">
+	<a class="icon icon-barcode pull-right" id="header-right" data-ignore="push" onclick="window.watt.scanBarCode()" href="javascript:void(0)"></a>
+    <div class="title" id="header-title">
   	<a href="#searchModal">
     	<span class="icon-search"></span>
     	<span>寻找图书，作者，分类</span>
@@ -47,12 +47,22 @@
   function redirect_location()
   {
       var st = window.watt.getBeacon();
-      window.location.href="/location/"+st;
+      if (!st){
+          alert('未进入指定图书区域！')
+      } else {
+          window.location.href="/location/"+st;
+      }
   };
 
   function getISBN(st)
   {
       //alert(st);
-      location.pathname = '/bookisbn/' + st;
+      if (st.match(/^\d{13}$/)){
+          location.pathname = '/bookisbn/' + st;
+      } else {
+          // todo
+      }
+
+
   }
 </script>
